@@ -5,6 +5,9 @@
 
 namespace Echo { namespace Execution {
 
+//
+// Calls a function when destructed
+//
 class OnDestruct
 {
 private:
@@ -12,7 +15,7 @@ private:
 	bool m_ShouldExecute=true;
 
 public:
-	OnDestruct(std::function<void()> &function) : m_Function(function)
+	OnDestruct(const std::function<void()> &function) : m_Function(function)
 	{
 	}
 

@@ -70,8 +70,7 @@ private:
 			Unlock<CriticalSection> unlock(m_SyncRoot);
 
 			// Make sure we clear out the data regardless of what happens
-			std::function<void()> tidyup=[&]{data.clear();};
-			Echo::Execution::OnDestruct onDestruct(tidyup);
+			Echo::Execution::OnDestruct onDestruct([&]{data.clear();});
 
 			ProcessItems(data);
 		}
