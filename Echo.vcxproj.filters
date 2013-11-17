@@ -66,5 +66,11 @@
     <ClInclude Include="Echo\Threading\ActionDispatchQueue.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\Threading\IWorkItemDispatcher.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

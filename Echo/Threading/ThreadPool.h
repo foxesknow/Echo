@@ -2,6 +2,7 @@
 
 #include <Echo/WinInclude.h>
 
+#include "IWorkItemDispatcher.h"
 #include "ThreadException.h"
 
 #include <functional>
@@ -10,7 +11,7 @@
 
 namespace Echo { namespace Threading {
 
-class ThreadPool
+class ThreadPool : IWorkItemDispatcher
 {
 private:
 	PTP_POOL m_Pool;
@@ -130,7 +131,7 @@ public:
 		::SetThreadpoolThreadMaximum(m_Pool,value);
 	}
 
-	void Submit(std::function<void()> function)
+	virtual void Submit(const std::function<void()> &function) override
 	{
 		EnsureRunning();
 
