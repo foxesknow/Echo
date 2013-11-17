@@ -54,5 +54,17 @@
     <ClInclude Include="Echo\Threading\ThreadException.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\Threading\WorkDispatchQueue.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Execution\All.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Execution\OnDestruct.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Threading\ActionDispatchQueue.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
