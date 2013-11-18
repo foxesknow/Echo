@@ -12,6 +12,7 @@ obj/
 *.pdb
 ich
 *.ich
+*.ipch
 *.class
 *.sdf
 *.opensdf

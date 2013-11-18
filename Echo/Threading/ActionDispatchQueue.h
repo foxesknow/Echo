@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Echo/WinInclude.h>
+
 #include "ThreadPool.h"
 #include "WorkDispatchQueue.h"
 
@@ -21,11 +23,11 @@ protected:
 public:
 	ActionDispatchQueue(ThreadPool &pool) : Base(pool)
 	{
+		ProcessRemainingItems(true);
 	}
 
-	~ActionDispatchQueue()
+	~ActionDispatchQueue()override
 	{
-		ProcessRemainingItems(true);
 		Shutdown();
 	}
 };

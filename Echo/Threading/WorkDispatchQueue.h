@@ -31,8 +31,10 @@ private:
 	bool m_Shutdown=false;
 	bool m_ProcessRemainingItems=false;
 
-	void SwitchActive()
+	std::deque<T> &SwitchActive()
 	{
+		auto previous=m_ActiveData;
+
 		if(m_ActiveData==&m_Data)
 		{
 			m_ActiveData=&m_SwapData;
@@ -41,9 +43,11 @@ private:
 		{
 			m_ActiveData=&m_Data;
 		}
+
+		return *previous;
 	}
 
-	void DoEnqueue(T &data)
+	void DoEnqueue(const T &data)
 	{
 		if(m_Shutdown) throw ThreadException(_T("dispatch queue has been shut down"));
 
@@ -63,8 +67,7 @@ private:
 
 		while(m_ActiveData->size()!=0 && m_StopProcessing==false)
 		{
-			std::deque<T> &data=*m_ActiveData;
-			SwitchActive();
+			std::deque<T> &data=SwitchActive();
 
 			// We can get exit the lock now
 			Unlock<CriticalSection> unlock(m_SyncRoot);
@@ -121,13 +124,13 @@ public:
 	WorkDispatchQueue(const WorkDispatchQueue&)=delete;
 	WorkDispatchQueue &operator=(const WorkDispatchQueue&)=delete;
 
-	void Enqueue(T &data)
+	void Enqueue(const T &data)
 	{
 		Lock<CriticalSection> lock(m_SyncRoot);
 		DoEnqueue(data);
 	}
 
-	bool TryEnqueue(T &data)
+	bool TryEnqueue(const T &data)
 	{
 		Lock<CriticalSection> lock(m_SyncRoot);
 

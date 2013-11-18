@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Echo", "Echo.vcxproj", "{9564A203-8EFA-440C-8847-7A6CC3F0598E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EchoUnitTest", "Tests\EchoUnitTest\EchoUnitTest.vcxproj", "{C5A27DAB-D1A5-44E0-9A2A-F26F707B216B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9564A203-8EFA-440C-8847-7A6CC3F0598E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9564A203-8EFA-440C-8847-7A6CC3F0598E}.Debug|Win32.Build.0 = Debug|Win32
+		{9564A203-8EFA-440C-8847-7A6CC3F0598E}.Release|Win32.ActiveCfg = Release|Win32
+		{9564A203-8EFA-440C-8847-7A6CC3F0598E}.Release|Win32.Build.0 = Release|Win32
+		{C5A27DAB-D1A5-44E0-9A2A-F26F707B216B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C5A27DAB-D1A5-44E0-9A2A-F26F707B216B}.Debug|Win32.Build.0 = Debug|Win32
+		{C5A27DAB-D1A5-44E0-9A2A-F26F707B216B}.Release|Win32.ActiveCfg = Release|Win32
+		{C5A27DAB-D1A5-44E0-9A2A-F26F707B216B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

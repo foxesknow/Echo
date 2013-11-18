@@ -74,7 +74,7 @@ private:
 	}
 
 public:
-	ThreadPool()
+	ThreadPool() : m_Pool(nullptr)
 	{
 	}
 
