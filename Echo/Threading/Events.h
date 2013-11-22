@@ -35,32 +35,41 @@ protected:
 			throw WindowsException(_T("could not create event"));
 		}
 
-		Handle(handle);
+		UnderlyingHandle(handle);
 	}
 
 	Event(Event &&rhs) : Base(std::move(rhs))
 	{
 	}
 
+	Event(HANDLE handle) : Base(handle)
+	{
+	}
+
 public:
 	void Set()const
 	{
-		::SetEvent(Handle());
+		::SetEvent(UnderlyingHandle());
 	}
 
 	void Reset()const
 	{
-		::ResetEvent(Handle());
+		::ResetEvent(UnderlyingHandle());
 	}
 };
 
 //
 // Manual reset event
 //
-class ManualResetEvent : public Event
+class ManualResetEvent final : public Event
 {
 private:
 	typedef Event Base;
+
+protected:
+	ManualResetEvent(HANDLE handle) : Event(handle)
+	{
+	}
 
 public:
 	explicit ManualResetEvent(InitialState initialState) : Event(TRUE,initialState)
@@ -83,15 +92,27 @@ public:
 
 		return *this;
 	}
+
+	static ManualResetEvent Attach(HANDLE handle)
+	{
+		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+
+		return ManualResetEvent(handle);
+	}
 };
 
 //
 // Auto reset event
 //
-class AutoResetEvent : public Event
+class AutoResetEvent final : public Event
 {
 private:
 	typedef Event Base;
+
+protected:
+	AutoResetEvent(HANDLE handle) : Event(handle)
+	{
+	}
 
 public:
 	explicit AutoResetEvent(InitialState initialState) : Event(FALSE,initialState)
@@ -113,6 +134,13 @@ public:
 		}
 
 		return *this;
+	}
+
+	static AutoResetEvent Attach(HANDLE handle)
+	{
+		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+
+		return AutoResetEvent(handle);
 	}
 };
 

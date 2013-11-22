@@ -72,5 +72,14 @@
     <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\IO\All.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Handle.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IO\IOException.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

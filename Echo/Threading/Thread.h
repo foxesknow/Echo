@@ -59,27 +59,27 @@ public:
 
 	void Start()
 	{
-		if(Handle()!=Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
+		if(UnderlyingHandle()!=Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
 
 		auto handle=::_beginthreadex(nullptr,0,ThreadMain,this,0,nullptr);
-		Handle(reinterpret_cast<HANDLE>(handle));
+		UnderlyingHandle(reinterpret_cast<HANDLE>(handle));
 	}
 
 	void Suspend()const
 	{
-		DWORD success=::SuspendThread(Handle());
+		DWORD success=::SuspendThread(UnderlyingHandle());
 		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("suspend failed"));
 	}
 
 	void Resume()const
 	{
-		DWORD success=::ResumeThread(Handle());
+		DWORD success=::ResumeThread(UnderlyingHandle());
 		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("resume failed"));
 	}
 
 	bool Started()const
 	{
-		return Handle()!=Traits::InvalidValue();
+		return UnderlyingHandle()!=Traits::InvalidValue();
 	}
 };
 

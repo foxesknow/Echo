@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Echo/WinInclude.h>
+#include <Echo/Handle.h>
 #include <Echo/HandleTraits.h>
 #include <Echo/Exceptions.h>
 
@@ -10,16 +11,13 @@ namespace Echo{
 
 const std::chrono::milliseconds Infinite(INFINITE);
 
-class WaitHandle
+class WaitHandle : public Handle
 {
-
 private:
-	HANDLE m_Handle;
-
 	bool DoWait(const std::chrono::milliseconds &milliseconds)const
 	{
 		DWORD ms=static_cast<DWORD>(milliseconds.count());
-		auto outcome=::WaitForSingleObject(m_Handle,ms);
+		auto outcome=::WaitForSingleObject(UnderlyingHandle(),ms);
 
 		if(outcome==WAIT_OBJECT_0) return true;
 		if(outcome==WAIT_TIMEOUT) return false;
@@ -35,38 +33,18 @@ private:
 	}
 
 protected:
-	WaitHandle(HANDLE handle) : m_Handle(handle)
+	WaitHandle(HANDLE handle) : Handle(handle)
 	{
 	}
 
-	WaitHandle(WaitHandle &&rhs)
+	WaitHandle(WaitHandle &&rhs) : Handle(std::move(rhs))
 	{
-		Swap(rhs);
 	}
 
 	WaitHandle(const WaitHandle &)=delete;
 	WaitHandle &operator=(const WaitHandle &)=delete;
 
-	HANDLE Handle()const
-	{
-		return m_Handle;
-	}
-
-	void Handle(HANDLE value)
-	{
-		m_Handle=value;
-	}
-
-	void Swap(WaitHandle &rhs)
-	{
-		std::swap(m_Handle,rhs.m_Handle);
-	}
-
 public:
-	virtual ~WaitHandle()=0
-	{
-		// It's down to the derived class to know how to release the handle
-	}
 
 	bool Wait()const
 	{
@@ -111,14 +89,14 @@ protected:
 
 	void Close()
 	{
-		Traits::Destroy(Handle());
-		Handle(Traits::InvalidValue());
+		Traits::Destroy(UnderlyingHandle());
+		UnderlyingHandle(Traits::InvalidValue());
 	}
 
 public:
 	virtual ~WaitHandleImpl()override
 	{
-		auto handle=Handle();
+		auto handle=UnderlyingHandle();
 		Traits::Destroy(handle);
 	}
 };
