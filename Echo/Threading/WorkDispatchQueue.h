@@ -24,7 +24,7 @@ private:
 
 	std::deque<T> *m_ActiveData;
 
-	ThreadPool &m_Pool;
+	IFunctionDispatcher &m_Dispatcher;
 	
 	const CriticalSection m_SyncRoot;
 	const AutoResetEvent m_StopEvent;
@@ -67,7 +67,7 @@ private:
 		{
 			m_ThreadActive=true;
 			auto function=[this]{ProcessQueue();};
-			m_Pool.Submit(function);
+			m_Dispatcher.Submit(function);
 		}
 	}
 
@@ -139,9 +139,9 @@ protected:
 public:
 	/**
 	 * Initializes the instance
-	 * @param pool  the thread pool to execute the work on
+	 * @param dispatcher  an object that is able to dispatch function invocations
 	 */
-	WorkDispatchQueue(ThreadPool &pool) : m_Pool(pool), m_StopEvent(InitialState::NonSignalled)
+	WorkDispatchQueue(IFunctionDispatcher &dispatcher) : m_Dispatcher(dispatcher), m_StopEvent(InitialState::NonSignalled)
 	{
 		m_ActiveData=&m_Data;
 	}

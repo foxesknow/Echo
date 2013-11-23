@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IWorkItemDispatcher.h"
+#include "IFunctionDispatcher.h"
 
 #include <functional>
 
@@ -9,9 +9,12 @@ namespace Echo { namespace Threading {
 //
 // Immediately executes a function on the callers thread
 //
-class ImmediateWorkItemDispatcher : IWorkItemDispatcher
+class ImmediateWorkItemDispatcher : public IFunctionDispatcher
 {
 public:
+	/**
+	 * Accepts a function and executes it immediately on the current thread
+	 */
 	virtual void Submit(const std::function<void()> &function) override
 	{
 		function();

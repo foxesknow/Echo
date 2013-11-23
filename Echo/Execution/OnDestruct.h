@@ -5,9 +5,9 @@
 
 namespace Echo { namespace Execution {
 
-//
-// Calls a function when destructed
-//
+/**
+ * Calls a function when destructed
+ */
 class OnDestruct
 {
 private:
@@ -15,19 +15,28 @@ private:
 	bool m_ShouldExecute=true;
 
 public:
+	/**
+	 * Initializes the instance
+	 * @param function  the function to execute when destroyed
+	 */
 	OnDestruct(const std::function<void()> &function) : m_Function(function)
 	{
 	}
 
+	/**
+	 * Initializes the instance
+	 */
 	OnDestruct(OnDestruct &&rhs) : m_Function(std::move(rhs.m_Function))
 	{
 		rhs.m_ShouldExecute=false;
 	}
 
 	OnDestruct(const OnDestruct&)=delete;
-
 	OnDestruct &operator=(const OnDestruct&)=delete;
 
+	/**
+	 * Moves the right hand side into the instance
+	 */
 	OnDestruct &operator=(OnDestruct &&rhs)
 	{
 		if(this!=&rhs)
@@ -39,6 +48,9 @@ public:
 		return *this;
 	}
 
+	/**
+	 * Destroys the instance, executing the function if necessary
+	 */
 	~OnDestruct()
 	{
 		if(m_ShouldExecute)

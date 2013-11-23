@@ -29,9 +29,9 @@ protected:
 public:
 	/**
 	 * Initializes the instance
-	 * @param pool  the thread pool to execute the work on
+	 * @param dispatcher  an object that is able to dispatch function invocations
 	 */
-	ActionDispatchQueue(ThreadPool &pool) : Base(pool)
+	ActionDispatchQueue(IFunctionDispatcher &dispatcher) : Base(dispatcher)
 	{
 		ProcessRemainingItems(true);
 	}

@@ -34,8 +34,7 @@ public:
 		event.Set();
 
 		// It should stay set now
-		signalled=event.Wait();
-		Assert::AreEqual(true,signalled,nullptr,LINE_INFO());
+		event.Wait();
 
 		signalled=event.Wait(m_Zero);
 		Assert::AreEqual(true,signalled,nullptr,LINE_INFO());
@@ -59,8 +58,7 @@ public:
 		event.Set();
 
 		// It'll be set for onw wait
-		signalled=event.Wait();
-		Assert::AreEqual(true,signalled,nullptr,LINE_INFO());
+		event.Wait();
 
 		signalled=event.Wait(m_Zero);
 		Assert::AreEqual(false,signalled,nullptr,LINE_INFO());

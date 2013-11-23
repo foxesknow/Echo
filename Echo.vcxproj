@@ -27,8 +27,8 @@
     <ClInclude Include="Echo\Threading\ConditionalVariable.h" />
     <ClInclude Include="Echo\Threading\CriticalSection.h" />
     <ClInclude Include="Echo\Threading\Events.h" />
+    <ClInclude Include="Echo\Threading\IFunctionDispatcher.h" />
     <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h" />
-    <ClInclude Include="Echo\Threading\IWorkItemDispatcher.h" />
     <ClInclude Include="Echo\Threading\Lock.h" />
     <ClInclude Include="Echo\Threading\Thread.h" />
     <ClInclude Include="Echo\Threading\ThreadException.h" />

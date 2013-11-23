@@ -5,7 +5,7 @@
 #include "CriticalSection.h"
 #include "Events.h"
 #include "ImmediateWorkItemDispatcher.h"
-#include "IWorkItemDispatcher.h"
+#include "IFunctionDispatcher.h"
 #include "Lock.h"
 #include "Thread.h"
 #include "ThreadException.h"

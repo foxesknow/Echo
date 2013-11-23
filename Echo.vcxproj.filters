@@ -66,9 +66,6 @@
     <ClInclude Include="Echo\Threading\ActionDispatchQueue.h">
       <Filter>Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Threading\IWorkItemDispatcher.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
     <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h">
       <Filter>Echo</Filter>
     </ClInclude>
@@ -91,6 +88,9 @@
       <Filter>Echo</Filter>
     </ClInclude>
     <ClInclude Include="Echo\IO\AsyncResult.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Threading\IFunctionDispatcher.h">
       <Filter>Echo</Filter>
     </ClInclude>
   </ItemGroup>

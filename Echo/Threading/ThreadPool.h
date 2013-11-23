@@ -2,7 +2,7 @@
 
 #include <Echo/WinInclude.h>
 
-#include "IWorkItemDispatcher.h"
+#include "IFunctionDispatcher.h"
 #include "ThreadException.h"
 
 #include <functional>
@@ -11,7 +11,10 @@
 
 namespace Echo { namespace Threading {
 
-class ThreadPool : IWorkItemDispatcher
+/**
+ * A thread pool
+ */
+class ThreadPool : public IFunctionDispatcher
 {
 private:
 	PTP_POOL m_Pool;
@@ -59,6 +62,9 @@ private:
 		::InterlockedDecrement(counter);
 	}
 
+	/**
+	 * Releases any memory allocated for the pool when we're closing the pool down
+	 */
 	static void CALLBACK Cleanup(void *context, void*)
 	{
 		ThreadData *threadData=reinterpret_cast<ThreadData*>(context);
@@ -74,10 +80,32 @@ private:
 	}
 
 public:
+	/**
+	 * Initializes the instance
+	 */
 	ThreadPool() : m_Pool(nullptr)
 	{
 	}
 
+	/**
+	 * Destroys the instance.
+	 * If the pool has been started any memory allocated to it will be freed
+	 */
+	~ThreadPool()
+	{
+		if(m_Pool!=nullptr) 
+		{
+			::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup,m_CancelOutstanding,nullptr);
+			
+			::CloseThreadpool(m_Pool);
+			::CloseThreadpoolCleanupGroup(m_CleanupGroup);
+			::DestroyThreadpoolEnvironment(&m_Environment);
+		}
+	}
+
+	/**
+	 * Starts the pool
+	 */
 	void Start()
 	{
 		if(m_Pool!=nullptr) throw ThreadException(_T("thread pool already started"));
@@ -91,46 +119,52 @@ public:
 		::SetThreadpoolCallbackPool(&m_Environment,m_Pool);
 	}
 
-	~ThreadPool()
-	{
-		if(m_Pool!=nullptr) 
-		{
-			::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup,m_CancelOutstanding,nullptr);
-			
-			::CloseThreadpool(m_Pool);
-			::CloseThreadpoolCleanupGroup(m_CleanupGroup);
-			::DestroyThreadpoolEnvironment(&m_Environment);
-		}
-	}
-
+	/**	
+	 * Returns the number of items waiting to be run on the pool
+	 */
 	LONG OutstandingWork()const ECHO_NOEXCEPT
 	{
 		LONG outstanding=::InterlockedCompareExchange(&m_OutstandingWork,0,0);
 		return outstanding;
 	}
 
+	/**
+	 * Indicates if we should cancel any outstanding items when the pool is destroyed
+	 */
 	bool CancelOutstanding()const ECHO_NOEXCEPT
 	{
 		return m_CancelOutstanding;
 	}
 
+	/**
+	 * Indicates if we should cancel any outstanding items when the pool is destroyed
+	 */
 	void CancelOutstanding(bool value) ECHO_NOEXCEPT
 	{
 		m_CancelOutstanding=value;
 	}
 
+	/**
+	 * Sets the minimum number of threads for the pool
+	 */
 	void MinimumThreads(DWORD value)
 	{
 		EnsureRunning();
 		::SetThreadpoolThreadMinimum(m_Pool,value);
 	}
-
+	
+	/**
+	 * Sets the maximum number of threads for the pool
+	 */
 	void MaximumThreads(DWORD value)
 	{
 		EnsureRunning();
 		::SetThreadpoolThreadMaximum(m_Pool,value);
 	}
 
+	/**
+	 * Submits an item of work to the thread pool
+	 */
 	virtual void Submit(const std::function<void()> &function) override
 	{
 		EnsureRunning();
