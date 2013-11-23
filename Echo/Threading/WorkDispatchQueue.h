@@ -12,6 +12,9 @@
 
 namespace Echo { namespace Threading {
 
+/**
+ * A work queue that allows work to be farmed off onto another thread
+ */
 template<typename T>
 class WorkDispatchQueue
 {
@@ -31,6 +34,10 @@ private:
 	bool m_Shutdown=false;
 	bool m_ProcessRemainingItems=false;
 
+	/**
+	 * Switches the active queue with the swap deque
+	 * @returns the previous active deque
+	 */
 	std::deque<T> &SwitchActive()
 	{
 		auto previous=m_ActiveData;
@@ -47,6 +54,9 @@ private:
 		return *previous;
 	}
 
+	/**
+	 * Enqueues data to be worked on
+	 */
 	void DoEnqueue(const T &data)
 	{
 		if(m_Shutdown) throw ThreadException(_T("dispatch queue has been shut down"));
@@ -61,6 +71,9 @@ private:
 		}
 	}
 
+	/**
+	 * Processes the queued up data on a thread
+	 */
 	void ProcessQueue()
 	{
 		Lock<CriticalSection> lock(m_SyncRoot);
@@ -89,6 +102,9 @@ private:
 		}
 	}
 
+	/**
+	 * Processes all the items in a deque
+	 */
 	void ProcessItems(std::deque<T> &data)
 	{
 		for(T &item : data)
@@ -98,24 +114,41 @@ private:
 	}
 
 protected:
+	/**
+	 * Carries out the processing an an individual item of work
+	 */
 	virtual void ProcessItem(T &item)=0;
 
+	/**
+	 * Indicates if any remaining items should be processed when the work queue is shut down
+	 * @param value  true to process remaining item, false to ignore them
+	 */
 	void ProcessRemainingItems(bool value)
 	{
 		m_ProcessRemainingItems=value;
 	}
 
+	/**
+	 * Indicates if any remaining items should be processed when the work queue is shut down
+	 */
 	bool ProcessRemainingItems()const
 	{
 		return m_ProcessRemainingItems;
 	}
 
 public:
+	/**
+	 * Initializes the instance
+	 * @param pool  the thread pool to execute the work on
+	 */
 	WorkDispatchQueue(ThreadPool &pool) : m_Pool(pool), m_StopEvent(InitialState::NonSignalled)
 	{
 		m_ActiveData=&m_Data;
 	}
 
+	/**
+	 * Destroys the instance by shutting down the queue
+	 */
 	virtual ~WorkDispatchQueue()
 	{
 		Shutdown();
@@ -124,12 +157,21 @@ public:
 	WorkDispatchQueue(const WorkDispatchQueue&)=delete;
 	WorkDispatchQueue &operator=(const WorkDispatchQueue&)=delete;
 
+	/**
+	 * Adds a work item to the queue.
+	 * If the queue has been shut down the method will fail
+	 */
 	void Enqueue(const T &data)
 	{
 		Lock<CriticalSection> lock(m_SyncRoot);
 		DoEnqueue(data);
 	}
 
+	/**
+	 * Attempts to add a work item to the queue.
+	 * If the queue has been shut down then the work item will not be queued
+	 * @returns true if the item was queued for processing, false if it could not be queue
+	 */
 	bool TryEnqueue(const T &data)
 	{
 		Lock<CriticalSection> lock(m_SyncRoot);
@@ -140,6 +182,10 @@ public:
 		return true;
 	}
 
+	/**
+	 * Shuts the queue down.
+	 * When this method returns no more work may be enqueued
+	 */
 	void Shutdown()
 	{
 		bool shouldWait=false;

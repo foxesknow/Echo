@@ -4,12 +4,15 @@
 
 namespace Echo { namespace Threading {
 
-//
-// Interface for a class that is able to process work
-//
+/**
+ * Interface for a class that is able to process work
+ */
 class IWorkItemDispatcher
 {
 public:
+	/**
+	 * Destroys the instance
+	 */
 	virtual ~IWorkItemDispatcher()
 	{
 

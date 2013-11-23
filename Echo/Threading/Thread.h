@@ -11,9 +11,9 @@
 
 namespace Echo { namespace Threading {
 
-//
-//
-//
+/**
+ * Thread
+ */
 class Thread : public WaitHandleImpl<HandleNull>
 {
 private:
@@ -30,21 +30,37 @@ private:
 	}
 
 public:
+	/**
+	 * Initializes the instance
+	 */
 	Thread() ECHO_NOEXCEPT
 	{
 	}
 
+	/**
+	 * Initializes the instance
+	 * @param threadFunction  the function to execute on the thread
+	 */
 	Thread(std::function<void()> threadFunction) : m_ThreadFunction(threadFunction)
 	{
 
 	}
 
+	/**
+	 * Initializes the instance
+	 * @param rhs  the thread to move into this instance
+	 */
 	Thread(Thread &&rhs) : Base(std::move(rhs)), m_ThreadFunction(std::move(rhs.m_ThreadFunction))
 	{
 	}
 
 	Thread(const Thread&)=delete;
 
+	/**
+	 * Moves the thread into the instance
+	 * If the instance is already running then the instance is closed.
+	 * @param rhs  the instance to move
+	 */
 	Thread &operator=(Thread &&rhs)
 	{
 		if(this!=&rhs)
@@ -57,6 +73,9 @@ public:
 		return *this;
 	}
 
+	/**
+	 * Starts the thread
+	 */
 	void Start()
 	{
 		if(UnderlyingHandle()!=Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
@@ -65,18 +84,32 @@ public:
 		UnderlyingHandle(reinterpret_cast<HANDLE>(handle));
 	}
 
+	/**
+	 *Suspends the thread
+	 */
 	void Suspend()const
 	{
+		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
+
 		DWORD success=::SuspendThread(UnderlyingHandle());
 		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("suspend failed"));
 	}
 
+	/**
+	 * Resumes a previously suspended thread
+	 */
 	void Resume()const
 	{
+		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
+
 		DWORD success=::ResumeThread(UnderlyingHandle());
 		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("resume failed"));
 	}
 
+	/**
+	 * Indicates if the thread has been started
+	 * @returns true if the thread has been started, otherwise false
+	 */
 	bool Started()const
 	{
 		return UnderlyingHandle()!=Traits::InvalidValue();

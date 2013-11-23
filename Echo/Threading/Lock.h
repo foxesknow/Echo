@@ -14,4 +14,9 @@ class Unlock
 {
 };
 
+template<typename T>
+class TryLock
+{
+};
+
 }} // end of namespace
