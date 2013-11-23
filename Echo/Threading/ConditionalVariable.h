@@ -6,6 +6,9 @@
 
 namespace Echo { namespace Threading {
 
+/**
+ * Wraps a Win32 conditional variable
+ */
 class ConditionalVariable
 {
 private:
@@ -26,6 +29,9 @@ private:
 	}
 
 public:
+	/**
+	 * Initializes the instance
+	 */
 	ConditionalVariable() ECHO_NOEXCEPT
 	{
 		::InitializeConditionVariable(&m_Condition);
@@ -34,20 +40,39 @@ public:
 	ConditionalVariable(const ConditionalVariable&)=delete;
 	ConditionalVariable &operator=(const ConditionalVariable &)=delete;
 
+	/**
+	 * Destroys the instance
+	 */
 	~ConditionalVariable() ECHO_NOEXCEPT
 	{
 	}
 
-	bool Wait(const CriticalSection &cs)const
+	/**
+	 * Waits forever on the condition
+	 * @param cs  the critical section to unlock whilst we wait
+	 */
+	void Wait(const CriticalSection &cs)const
 	{
-		return DoWait(cs.Underlying(),Infinite);
+		DoWait(cs.Underlying(),Infinite);
 	}
 
+	/**
+	 * Waits on the condition
+	 * @param cs  the critical section to unlock whilst we wait
+	 * @param milliseconds  how long to wait for
+	 * @returns true if condition was notified within the duration, otherwise false
+	 */
 	bool Wait(const CriticalSection &cs, const std::chrono::milliseconds &milliseconds)const
 	{
 		return DoWait(cs.Underlying(),milliseconds);
 	}
 
+	/**
+	 * Waits on the condition
+	 * @param cs  the critical section to unlock whilst we wait
+	 * @param duration  how long to wait for
+	 * @returns true if condition was notified within the duration, otherwise false
+	 */
 	template<typename REP, typename PERIOD>
 	bool Wait(const CriticalSection &cs, const std::chrono::duration<REP,PERIOD> &duration)const
 	{
@@ -55,16 +80,21 @@ public:
 		return DoWait(cs.Underlying(),ms);
 	}
 
+	/**
+	 * Notifes the condition, releasing a thread that is waiting on the condition
+	 */
 	void Notify()const ECHO_NOEXCEPT
 	{
 		::WakeConditionVariable(&m_Condition);
 	}
 
+	/**
+	 * Notifes the condition, releasing all threads that are waiting on the condition
+	 */
 	void NotifyAll()const ECHO_NOEXCEPT
 	{
 		::WakeAllConditionVariable(&m_Condition);
 	}
-
 };
 
 }} // end of namespace

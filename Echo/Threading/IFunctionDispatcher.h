@@ -18,6 +18,9 @@ public:
 
 	}
 
+	/**
+	 * Accepts a function and executes it
+	 */
 	virtual void Submit(const std::function<void()> &function)=0;
 };
 

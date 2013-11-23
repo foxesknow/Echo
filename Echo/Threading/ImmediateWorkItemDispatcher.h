@@ -6,9 +6,9 @@
 
 namespace Echo { namespace Threading {
 
-//
-// Immediately executes a function on the callers thread
-//
+/**
+ * Immediately executes a function on the callers thread
+ */
 class ImmediateWorkItemDispatcher : public IFunctionDispatcher
 {
 public:
