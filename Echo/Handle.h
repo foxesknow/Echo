@@ -8,24 +8,20 @@ private:
 	HANDLE m_Handle;
 
 protected:
-	Handle(HANDLE handle) : m_Handle(handle)
+	Handle(HANDLE handle) ECHO_NOEXCEPT : m_Handle(handle)
 	{
 	}
 
-	Handle(Handle &&rhs)
-	{
-		Swap(rhs);
-	}
-
+	Handle(Handle &&rhs)=delete;
 	Handle(const Handle &)=delete;
 	Handle &operator=(const Handle &)=delete;
 
-	void Swap(Handle &rhs)
+	void Swap(Handle &rhs) ECHO_NOEXCEPT
 	{
 		std::swap(m_Handle,rhs.m_Handle);
 	}
 
-	void UnderlyingHandle(HANDLE value)
+	void UnderlyingHandle(HANDLE value) ECHO_NOEXCEPT
 	{
 		m_Handle=value;
 	}
@@ -36,7 +32,7 @@ public:
 		// It's down to the derived class to know how to release the handle
 	}
 
-	HANDLE UnderlyingHandle()const
+	HANDLE UnderlyingHandle() const ECHO_NOEXCEPT
 	{
 		return m_Handle;
 	}

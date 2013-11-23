@@ -12,36 +12,36 @@ private:
 	mutable CRITICAL_SECTION m_Section;
 
 public:
-	CriticalSection()
+	CriticalSection() ECHO_NOEXCEPT
 	{
 		::InitializeCriticalSection(&m_Section);
 	}
 
 	CriticalSection(const CriticalSection &)=delete;
 
-	~CriticalSection()
+	~CriticalSection() ECHO_NOEXCEPT
 	{
 		::DeleteCriticalSection(&m_Section);
 	}
 
 	CriticalSection &operator=(const CriticalSection &) = delete;
 
-	void Enter()const
+	void Enter()const ECHO_NOEXCEPT
 	{
 		::EnterCriticalSection(&m_Section);
 	}
 
-	bool TryEnter()const
+	bool TryEnter()const ECHO_NOEXCEPT
 	{
 		return ::TryEnterCriticalSection(&m_Section)!=FALSE;
 	}
 
-	void Exit()const
+	void Exit()const ECHO_NOEXCEPT
 	{
 		::LeaveCriticalSection(&m_Section);
 	}
 
-	CRITICAL_SECTION *Underlying()const
+	CRITICAL_SECTION *Underlying()const ECHO_NOEXCEPT
 	{
 		return &m_Section;
 	}
@@ -63,7 +63,7 @@ public:
 
 	Lock &operator=(Lock &)=delete;
 
-	~Lock()
+	~Lock() ECHO_NOEXCEPT
 	{
 		m_Section.Exit();
 	}

@@ -19,3 +19,4 @@ ich
 *.cache
 *.suo
 *.pch
+/*.gitattributes

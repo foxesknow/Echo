@@ -30,7 +30,7 @@ private:
 	}
 
 public:
-	Thread()
+	Thread() ECHO_NOEXCEPT
 	{
 	}
 

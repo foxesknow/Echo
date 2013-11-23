@@ -81,5 +81,17 @@
     <ClInclude Include="Echo\IO\IOException.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\IO\Overlapped.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IO\File.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Execution\Buffer.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IO\AsyncResult.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

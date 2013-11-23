@@ -21,5 +21,22 @@ public:
 	}
 };
 
+class HandleInvalidValue
+{
+public:
+	static HANDLE InvalidValue()
+	{
+		return INVALID_HANDLE_VALUE;
+	}
+
+	static void Destroy(HANDLE handle)
+	{
+		if(handle!=InvalidValue())
+		{
+			::CloseHandle(handle);
+		}
+	}
+};
+
 
 } // end of namespace

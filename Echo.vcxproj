@@ -13,11 +13,15 @@
   <ItemGroup>
     <ClInclude Include="Echo\Exceptions.h" />
     <ClInclude Include="Echo\Execution\All.h" />
+    <ClInclude Include="Echo\Execution\Buffer.h" />
     <ClInclude Include="Echo\Execution\OnDestruct.h" />
     <ClInclude Include="Echo\Handle.h" />
     <ClInclude Include="Echo\HandleTraits.h" />
     <ClInclude Include="Echo\IO\All.h" />
+    <ClInclude Include="Echo\IO\AsyncResult.h" />
+    <ClInclude Include="Echo\IO\File.h" />
     <ClInclude Include="Echo\IO\IOException.h" />
+    <ClInclude Include="Echo\IO\Overlapped.h" />
     <ClInclude Include="Echo\Threading\ActionDispatchQueue.h" />
     <ClInclude Include="Echo\Threading\All.h" />
     <ClInclude Include="Echo\Threading\ConditionalVariable.h" />

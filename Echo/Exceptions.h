@@ -25,6 +25,30 @@ public:
 	}
 };
 
+class ArgumentException : Exception
+{
+public:
+	ArgumentException()
+	{
+	}
+
+	ArgumentException(const std::tstring &reason) : Exception(reason)
+	{
+	}
+};
+
+class ArgumentNullException : Exception
+{
+public:
+	ArgumentNullException()
+	{
+	}
+
+	ArgumentNullException(const std::tstring &reason) : Exception(reason)
+	{
+	}
+};
+
 class WindowsException : Exception
 {
 private:

@@ -68,7 +68,7 @@ private:
 		}
 	}
 
-	void EnsureRunning()const
+	void EnsureRunning() const
 	{
 		if(m_Pool==nullptr) throw ThreadException(_T("thread pool not started"));
 	}
@@ -103,18 +103,18 @@ public:
 		}
 	}
 
-	LONG OutstandingWork()const
+	LONG OutstandingWork()const ECHO_NOEXCEPT
 	{
 		LONG outstanding=::InterlockedCompareExchange(&m_OutstandingWork,0,0);
 		return outstanding;
 	}
 
-	bool CancelOutstanding()const
+	bool CancelOutstanding()const ECHO_NOEXCEPT
 	{
 		return m_CancelOutstanding;
 	}
 
-	void CancelOutstanding(bool value)
+	void CancelOutstanding(bool value) ECHO_NOEXCEPT
 	{
 		m_CancelOutstanding=value;
 	}

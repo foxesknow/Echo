@@ -3,6 +3,8 @@
 #include <Echo/WaitHandle.h>
 #include <Echo/HandleTraits.h>
 
+#include "ThreadException.h"
+
 #include <utility>
 
 namespace Echo { namespace Threading {

@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	ConditionalVariable()
+	ConditionalVariable() ECHO_NOEXCEPT
 	{
 		::InitializeConditionVariable(&m_Condition);
 	}
@@ -34,7 +34,7 @@ public:
 	ConditionalVariable(const ConditionalVariable&)=delete;
 	ConditionalVariable &operator=(const ConditionalVariable &)=delete;
 
-	~ConditionalVariable()
+	~ConditionalVariable() ECHO_NOEXCEPT
 	{
 	}
 
@@ -55,12 +55,12 @@ public:
 		return DoWait(cs.Underlying(),ms);
 	}
 
-	void Notify()const
+	void Notify()const ECHO_NOEXCEPT
 	{
 		::WakeConditionVariable(&m_Condition);
 	}
 
-	void NotifyAll()const
+	void NotifyAll()const ECHO_NOEXCEPT
 	{
 		::WakeAllConditionVariable(&m_Condition);
 	}

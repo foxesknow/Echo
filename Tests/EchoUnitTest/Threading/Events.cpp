@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 
 #include <chrono>
+#include <utility>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -65,7 +66,24 @@ public:
 		Assert::AreEqual(false,signalled,nullptr,LINE_INFO());
 	}
 
-	
+	TEST_METHOD(ManualEvent_MoveCtor)
+	{
+		using namespace Echo::Threading;
+
+		auto event=CreateManualResetEvent();
+		Assert::AreNotEqual(Event::Traits::InvalidValue(),event.UnderlyingHandle(),nullptr,LINE_INFO());
+
+		ManualResetEvent event2=std::move(event);
+		Assert::AreNotEqual(Event::Traits::InvalidValue(),event2.UnderlyingHandle(),nullptr,LINE_INFO());
+		Assert::AreEqual(Event::Traits::InvalidValue(),event.UnderlyingHandle(),nullptr,LINE_INFO());
+	}
+
+	Echo::Threading::ManualResetEvent CreateManualResetEvent()
+	{
+		using namespace Echo::Threading;
+
+		return ManualResetEvent(InitialState::NonSignalled);
+	}
 };
 
 }} // end of namespace
