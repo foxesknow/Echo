@@ -14,8 +14,10 @@ namespace Echo { namespace IO {
 
 class File : public Handle
 {
-private:
+public:
 	typedef HandleInvalidValue Traits;
+
+private:
 
 
 	void CheckHandle()const
@@ -232,51 +234,85 @@ public:
 		return bytesTransferred;
 	}
 
+	/**
+	 * Creates or replaces a file
+	 */
 	static File Create(const std::tstring &filename, DWORD access)
 	{
 		return Open(filename,access,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL);
 	}
 
+	/**
+	 * Creates or replaces a file which is opened for asychronous IO
+	 */
 	static File CreateAsync(const std::tstring &filename, DWORD access)
 	{
 		return Open(filename,access,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
 	}
 
+	/**
+	 * Opens an existing file for reading
+	 */
 	static File OpenRead(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
 	}
 
+	/**
+	 * Opens an existing file for asynchronous reading
+	 */
 	static File OpenReadAsync(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
 	}
 
+	/**
+	 * Opens an existing file for writing
+	 */
 	static File OpenWrite(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
 	}
 
+	/**
+	 * Opens an existing file for asynchronous writing
+	 */
 	static File OpenWriteAsync(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
 	}
 
+	/**
+	 * Opens an existing file for reading and writing
+	 */
 	static File OpenReadWrite(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_WRITE|GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
 	}
 
+	/**
+	 * Opens an existing file for asynchronous reading and writing
+	 */
 	static File OpenReadWriteAsync(const std::tstring &filename)
 	{
 		return Open(filename,GENERIC_WRITE|GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
 	}
 
+	/**
+	 * Opens a file
+	 */
 	static File Open(const std::tstring &filename, DWORD access, DWORD shareMode, DWORD disposition, DWORD attributes)
 	{
 		HANDLE handle=::CreateFile(filename.c_str(),access,shareMode,nullptr,disposition,attributes,nullptr);
 		
 		if(handle==Traits::InvalidValue()) throw IOException(_T("unable to open file"));
+
+		return File(handle);
+	}
+
+	static File Attach(HANDLE handle)
+	{
+		if(handle==Traits::InvalidValue()) throw IOException(_T("invalid file handle"));
 
 		return File(handle);
 	}
