@@ -7,6 +7,7 @@
 #include "ImmediateWorkItemDispatcher.h"
 #include "IFunctionDispatcher.h"
 #include "Lock.h"
+#include "Mutex.h"
 #include "Thread.h"
 #include "ThreadException.h"
 #include "ThreadPool.h"

@@ -39,7 +39,7 @@ protected:
 
 		if(handle==Traits::InvalidValue())
 		{
-			throw WindowsException(_T("could not create event"));
+			throw ThreadException(_T("could not create event"));
 		}
 
 		UnderlyingHandle(handle);
