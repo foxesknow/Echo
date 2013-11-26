@@ -9,10 +9,11 @@
 
 #include "AsyncResult.h"
 #include "IOException.h"
+#include "IReaderWriter.h"
 
 namespace Echo { namespace IO {
 
-class File : public Handle
+class File : public Handle, public IReaderWriter
 {
 public:
 	typedef HandleInvalidValue Traits;
@@ -81,7 +82,7 @@ public:
 	/**
 	 * Closes the file, if open
 	 */
-	void Close() ECHO_NOEXCEPT
+	virtual void Close() override ECHO_NOEXCEPT
 	{
 		HANDLE handle=UnderlyingHandle();
 		Traits::Destroy(handle);
@@ -109,7 +110,7 @@ public:
 	 * @param bytesToWrite  how much data to write
 	 * @returns the number of bytes written to the file
 	 */
-	DWORD Write(const void *buffer, DWORD bytesToWrite) const
+	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) const override
 	{
 		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -132,7 +133,7 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the write completed immediately, Pending if the write is pending completion
 	 */
-	AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) const
+	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) const override
 	{
 		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -165,7 +166,7 @@ public:
 	 * @param bytesToRead  how much data to read
 	 * @returns the number of bytes read from the file
 	 */
-	DWORD Read(void *buffer, DWORD bytesToRead) const
+	virtual DWORD Read(void *buffer, DWORD bytesToRead) const override
 	{
 		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -188,7 +189,7 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the read completed immediately, Pending if the read is pending completion
 	 */
-	AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) const
+	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) const override
 	{
 		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -220,7 +221,7 @@ public:
 	 * @param overlapped  the overlapped structure that was passed to the async operation
 	 * @returns the number of bytes transferred by the async operation
 	 */
-	DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) const
+	virtual DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) const override
 	{
 		CheckHandle();
 

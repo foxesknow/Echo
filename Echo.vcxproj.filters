@@ -102,5 +102,8 @@
     <ClInclude Include="Echo\All.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\IO\IReaderWriter.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

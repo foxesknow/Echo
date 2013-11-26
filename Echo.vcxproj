@@ -22,6 +22,7 @@
     <ClInclude Include="Echo\IO\AsyncResult.h" />
     <ClInclude Include="Echo\IO\File.h" />
     <ClInclude Include="Echo\IO\IOException.h" />
+    <ClInclude Include="Echo\IO\IReaderWriter.h" />
     <ClInclude Include="Echo\IO\Overlapped.h" />
     <ClInclude Include="Echo\Threading\ActionDispatchQueue.h" />
     <ClInclude Include="Echo\Threading\All.h" />
