@@ -148,7 +148,7 @@ public:
 	 * Sets the handle to an invalid value and returns the OS value
 	 * @returns the OS handle
 	 */
-	HANDLE Detach() ECHO_NOEXCEPT
+	virtual HANDLE Detach() override ECHO_NOEXCEPT
 	{
 		HANDLE handle=UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());

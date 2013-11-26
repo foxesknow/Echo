@@ -8,18 +8,18 @@ namespace Echo{
 class Exception
 {
 private:
-	const std::tstring m_Reason;
+	const tstd::tstring m_Reason;
 
 public:
 	Exception()
 	{
 	}
 
-	Exception(const std::tstring &reason) : m_Reason(reason)
+	Exception(const tstd::tstring &reason) : m_Reason(reason)
 	{
 	}
 
-	const std::tstring &Reason()const
+	const tstd::tstring &Reason()const
 	{
 		return m_Reason;
 	}
@@ -32,7 +32,7 @@ public:
 	{
 	}
 
-	ArgumentException(const std::tstring &reason) : Exception(reason)
+	ArgumentException(const tstd::tstring &reason) : Exception(reason)
 	{
 	}
 };
@@ -44,7 +44,7 @@ public:
 	{
 	}
 
-	ArgumentNullException(const std::tstring &reason) : Exception(reason)
+	ArgumentNullException(const tstd::tstring &reason) : Exception(reason)
 	{
 	}
 };
@@ -52,7 +52,7 @@ public:
 class WindowsException : Exception
 {
 private:
-	const std::tstring m_Reason;
+	const tstd::tstring m_Reason;
 	DWORD m_ErrorCode;
 
 public:
@@ -61,7 +61,7 @@ public:
 		m_ErrorCode=::GetLastError();
 	}
 
-	WindowsException(const std::tstring &reason) : Exception(reason)
+	WindowsException(const tstd::tstring &reason) : Exception(reason)
 	{
 		m_ErrorCode=::GetLastError();
 	}

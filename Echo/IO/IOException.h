@@ -11,7 +11,7 @@ public:
 	{
 	}
 
-	IOException(const std::tstring &reason) : WindowsException(reason)
+	IOException(const tstd::tstring &reason) : WindowsException(reason)
 	{
 	}
 };

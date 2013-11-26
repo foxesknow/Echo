@@ -93,5 +93,14 @@
     <ClInclude Include="Echo\Threading\IFunctionDispatcher.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\Threading\Mutex.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Threading\Semaphore.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\All.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

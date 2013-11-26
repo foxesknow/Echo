@@ -11,7 +11,7 @@ public:
 	{
 	}
 
-	ThreadException(const std::tstring &reason) : Exception(reason)
+	ThreadException(const tstd::tstring &reason) : Exception(reason)
 	{
 	}
 };

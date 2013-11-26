@@ -59,4 +59,10 @@ public:
 	{
 		return m_Handle;
 	}
+
+	/**
+	 * Detaches the handle from its object, leaving it in a destructable but unusable state
+	 * @returns the handle managed by the object
+	 */
+	virtual HANDLE Detach()=0;
 };

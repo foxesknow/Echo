@@ -65,7 +65,9 @@ public:
 	void Release() const
 	{
 		auto handle=UnderlyingHandle();
-		::ReleaseMutex(handle);
+		
+		auto success=::ReleaseMutex(handle);
+		if(!success) throw ThreadException(_T("Release failed"));
 	}
 
 	/**

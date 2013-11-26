@@ -4,7 +4,7 @@
 #include <sstream>
 #include <tchar.h>
 
-namespace std
+namespace tstd
 {
 
 #ifdef UNICODE

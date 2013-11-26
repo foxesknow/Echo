@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Echo\All.h" />
     <ClInclude Include="Echo\Exceptions.h" />
     <ClInclude Include="Echo\Execution\All.h" />
     <ClInclude Include="Echo\Execution\Buffer.h" />
@@ -30,6 +31,8 @@
     <ClInclude Include="Echo\Threading\IFunctionDispatcher.h" />
     <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h" />
     <ClInclude Include="Echo\Threading\Lock.h" />
+    <ClInclude Include="Echo\Threading\Mutex.h" />
+    <ClInclude Include="Echo\Threading\Semaphore.h" />
     <ClInclude Include="Echo\Threading\Thread.h" />
     <ClInclude Include="Echo\Threading\ThreadException.h" />
     <ClInclude Include="Echo\Threading\ThreadPool.h" />
