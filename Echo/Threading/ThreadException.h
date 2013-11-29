@@ -4,7 +4,7 @@
 
 namespace Echo { namespace Threading {
 
-class ThreadException : Exception
+class ThreadException : public Exception
 {
 public:
 	ThreadException()

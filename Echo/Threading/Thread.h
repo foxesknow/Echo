@@ -79,6 +79,7 @@ public:
 	void Start()
 	{
 		if(UnderlyingHandle()!=Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
+		if(!m_ThreadFunction) throw ThreadException(_T("no function specified"));
 
 		auto handle=::_beginthreadex(nullptr,0,ThreadMain,this,0,nullptr);
 		UnderlyingHandle(reinterpret_cast<HANDLE>(handle));

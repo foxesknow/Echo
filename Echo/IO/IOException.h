@@ -4,7 +4,7 @@
 
 namespace Echo { namespace IO {
 
-class IOException : WindowsException
+class IOException : public WindowsException
 {
 public:
 	IOException()

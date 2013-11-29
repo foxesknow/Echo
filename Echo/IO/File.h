@@ -299,7 +299,7 @@ public:
 	 */
 	static File OpenReadWrite(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_WRITE|GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
+		return Open(filename,GENERIC_WRITE|GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
 	}
 
 	/**
@@ -307,7 +307,7 @@ public:
 	 */
 	static File OpenReadWriteAsync(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_WRITE|GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
+		return Open(filename,GENERIC_WRITE|GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
 	}
 
 	/**
