@@ -94,6 +94,7 @@
     </ClCompile>
     <ClCompile Include="Threading\ActionDispatchQueueTests.cpp" />
     <ClCompile Include="Threading\Events.cpp" />
+    <ClCompile Include="tstring_tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
