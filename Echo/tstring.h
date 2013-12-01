@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
+#include <algorithm>
 #include <sstream>
 #include <tchar.h>
+
 
 namespace tstd
 {
@@ -78,6 +80,58 @@ inline std::wstring Trim(const std::wstring &text, const std::wstring &whitespac
 	auto range=(end-begin)+1;
 
 	return text.substr(begin,range);
+}
+
+/**
+ * Converts a string to upper case
+ * @param text  the text to convert
+ * @return a new string
+ */
+inline std::string ToUpper(const std::string &text)
+{
+	std::string copy=text;
+	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
+
+	return copy;
+}
+
+/**
+ * Converts a string to upper case
+ * @param text  the text to convert
+ * @return a new string
+ */
+inline std::wstring ToUpper(const std::wstring &text)
+{
+	std::wstring copy=text;
+	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
+
+	return copy;
+}
+
+/**
+ * Converts a string to lower case
+ * @param text  the text to convert
+ * @return a new string
+ */
+inline std::string ToLower(const std::string &text)
+{
+	std::string copy=text;
+	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);
+
+	return copy;
+}
+
+/**
+ * Converts a string to lower case
+ * @param text  the text to convert
+ * @return a new string
+ */
+inline std::wstring ToLower(const std::wstring &text)
+{
+	std::wstring copy=text;
+	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);
+
+	return copy;
 }
 
 } // end of namespace

@@ -54,6 +54,30 @@ public:
 		auto trim=tstd::Trim(text,L"><");
 		Assert::IsTrue(trim==L"Hello",nullptr,LINE_INFO());
 	}
+
+	TEST_METHOD(ToLower_string)
+	{
+		std::string text="HELLO";
+		Assert::IsTrue(tstd::ToLower(text)=="hello",nullptr,LINE_INFO());
+	}
+
+	TEST_METHOD(ToLower_wstring)
+	{
+		std::wstring text=L"HELLO";
+		Assert::IsTrue(tstd::ToLower(text)==L"hello",nullptr,LINE_INFO());
+	}
+
+	TEST_METHOD(ToUpper_string)
+	{
+		std::string text="hello";
+		Assert::IsTrue(tstd::ToUpper(text)=="HELLO",nullptr,LINE_INFO());
+	}
+
+	TEST_METHOD(ToUpper_wstring)
+	{
+		std::wstring text=L"hello";
+		Assert::IsTrue(tstd::ToUpper(text)==L"HELLO",nullptr,LINE_INFO());
+	}
 };
 
 } // end of namesapce
