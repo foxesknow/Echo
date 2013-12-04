@@ -25,6 +25,7 @@
     <ClInclude Include="Echo\IO\IReaderWriter.h" />
     <ClInclude Include="Echo\IO\MemoryMappedFile.h" />
     <ClInclude Include="Echo\IO\Overlapped.h" />
+    <ClInclude Include="Echo\MultiWaiter.h" />
     <ClInclude Include="Echo\Threading\ActionDispatchQueue.h" />
     <ClInclude Include="Echo\Threading\All.h" />
     <ClInclude Include="Echo\Threading\ConditionalVariable.h" />

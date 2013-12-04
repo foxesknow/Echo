@@ -108,5 +108,8 @@
     <ClInclude Include="Echo\IO\MemoryMappedFile.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\MultiWaiter.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

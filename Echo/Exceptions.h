@@ -1,7 +1,8 @@
 #pragma once
 
-#include <Echo/Exceptions.h>
-#include <Echo/tstring.h>
+#include "WinInclude.h"
+#include "Exceptions.h"
+#include "tstring.h"
 
 namespace Echo{
 
