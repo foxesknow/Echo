@@ -15,6 +15,7 @@
     <ClInclude Include="Echo\Exceptions.h" />
     <ClInclude Include="Echo\Execution\All.h" />
     <ClInclude Include="Echo\Execution\Buffer.h" />
+    <ClInclude Include="Echo\Execution\MethodCall.h" />
     <ClInclude Include="Echo\Execution\OnDestruct.h" />
     <ClInclude Include="Echo\Handle.h" />
     <ClInclude Include="Echo\HandleTraits.h" />

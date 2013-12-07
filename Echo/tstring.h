@@ -36,7 +36,12 @@ namespace tstd
 	inline tstring to_tstring(float value)					{return std::to_wstring(value);}
 	inline tstring to_tstring(double value)					{return std::to_wstring(value);}
 	inline tstring to_tstring(long double value)			{return std::to_wstring(value);}
+
+	inline tstd::tstring to_tstring(const std::string &t)	{tstring temp; temp.assign(t.begin(),t.end()); return temp;}
+	inline tstd::tstring to_tstring(const std::wstring &t)	{return t;}
+
 #else
+
 	inline tstring to_tstring(int value)					{return std::to_string(value);}
 	inline tstring to_tstring(long value)					{return std::to_string(value);}
 	inline tstring to_tstring(long long value)				{return std::to_string(value);}
@@ -46,7 +51,46 @@ namespace tstd
 	inline tstring to_tstring(float value)					{return std::to_string(value);}
 	inline tstring to_tstring(double value)					{return std::to_string(value);}
 	inline tstring to_tstring(long double value)			{return std::to_string(value);}
+
+	inline tstd::tstring to_tstring(const std::string &t)	{return t;}
+	inline tstd::tstring to_tstring(const std::wstring &t)	{tstring temp; temp.assign(t.begin(),t.end()); return temp;}
 #endif
+
+/**
+ * Converts a string to a string
+ */
+inline std::string to_string(const std::string &t)		
+{
+	return t;
+}
+
+/**
+ * Converts a wide string to a string
+ */
+inline std::string to_string(const std::wstring &t)		
+{
+	std::string temp; 
+	temp.assign(t.begin(),t.end()); 
+	return temp;
+}
+
+/**
+ * Converts a string to a wide string
+ */
+inline std::wstring to_wstring(const std::string &t)	
+{
+	std::wstring temp; 
+	temp.assign(t.begin(),t.end()); 
+	return temp;
+}
+
+/**
+ * Converts a wide string to a wide string
+ */
+inline std::wstring to_wstring(const std::wstring &t)	
+{
+	return t;
+}
 
 /**
  * Trims leading and trailing whitespace from a string
@@ -54,7 +98,7 @@ namespace tstd
  * @params whitespace  the characters that are deemed to be whitespace
  * @returns a string
  */
-inline std::string Trim(const std::string &text, const std::string &whitespace=" \t")
+inline std::string trim(const std::string &text, const std::string &whitespace=" \t")
 {
 	auto begin=text.find_first_not_of(whitespace);
 	if(begin==std::string::npos) return "";
@@ -71,7 +115,7 @@ inline std::string Trim(const std::string &text, const std::string &whitespace="
  * @params whitespace  the characters that are deemed to be whitespace
  * @returns a string
  */
-inline std::wstring Trim(const std::wstring &text, const std::wstring &whitespace=L" \t")
+inline std::wstring trim(const std::wstring &text, const std::wstring &whitespace=L" \t")
 {
 	auto begin=text.find_first_not_of(whitespace);
 	if(begin==std::string::npos) return L"";
@@ -87,7 +131,7 @@ inline std::wstring Trim(const std::wstring &text, const std::wstring &whitespac
  * @param text  the text to convert
  * @return a new string
  */
-inline std::string ToUpper(const std::string &text)
+inline std::string to_upper(const std::string &text)
 {
 	std::string copy=text;
 	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
@@ -100,7 +144,7 @@ inline std::string ToUpper(const std::string &text)
  * @param text  the text to convert
  * @return a new string
  */
-inline std::wstring ToUpper(const std::wstring &text)
+inline std::wstring to_upper(const std::wstring &text)
 {
 	std::wstring copy=text;
 	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
@@ -113,7 +157,7 @@ inline std::wstring ToUpper(const std::wstring &text)
  * @param text  the text to convert
  * @return a new string
  */
-inline std::string ToLower(const std::string &text)
+inline std::string to_lower(const std::string &text)
 {
 	std::string copy=text;
 	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);
@@ -126,7 +170,7 @@ inline std::string ToLower(const std::string &text)
  * @param text  the text to convert
  * @return a new string
  */
-inline std::wstring ToLower(const std::wstring &text)
+inline std::wstring to_lower(const std::wstring &text)
 {
 	std::wstring copy=text;
 	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);

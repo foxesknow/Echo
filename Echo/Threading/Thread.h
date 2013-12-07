@@ -93,7 +93,7 @@ public:
 		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
 		DWORD success=::SuspendThread(UnderlyingHandle());
-		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("suspend failed"));
+		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("Suspend failed"));
 	}
 
 	/**
@@ -104,7 +104,7 @@ public:
 		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
 		DWORD success=::ResumeThread(UnderlyingHandle());
-		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("resume failed"));
+		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("Resume failed"));
 	}
 
 	/**
