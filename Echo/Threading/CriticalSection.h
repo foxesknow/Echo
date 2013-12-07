@@ -33,7 +33,7 @@ public:
 		::DeleteCriticalSection(&m_Section);
 	}
 
-	CriticalSection &operator=(const CriticalSection &) = delete;
+	CriticalSection &operator=(const CriticalSection &)=delete;
 
 	/**
 	 * Enters the critical section

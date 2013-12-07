@@ -114,5 +114,8 @@
     <ClInclude Include="Echo\Execution\MethodCall.h">
       <Filter>Echo</Filter>
     </ClInclude>
+    <ClInclude Include="Echo\Environment.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

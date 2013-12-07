@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Echo\All.h" />
+    <ClInclude Include="Echo\Environment.h" />
     <ClInclude Include="Echo\Exceptions.h" />
     <ClInclude Include="Echo\Execution\All.h" />
     <ClInclude Include="Echo\Execution\Buffer.h" />
