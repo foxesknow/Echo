@@ -2,6 +2,7 @@
 
 #include <Echo/WaitHandle.h>
 #include <Echo/HandleTraits.h>
+#include <Echo/tstring.h>
 
 #include "Lock.h"
 #include "ThreadException.h"
@@ -30,6 +31,14 @@ public:
 	Mutex()
 	{
 		auto handle=::CreateMutex(nullptr,FALSE,nullptr);
+		if(handle==Traits::InvalidValue()) throw ThreadException(_T("could not create mutex"));
+
+		UnderlyingHandle(handle);
+	}
+
+	Mutex(const tstd::tstring &mutexName)
+	{
+		auto handle=::CreateMutex(nullptr,FALSE,mutexName.c_str());
 		if(handle==Traits::InvalidValue()) throw ThreadException(_T("could not create mutex"));
 
 		UnderlyingHandle(handle);

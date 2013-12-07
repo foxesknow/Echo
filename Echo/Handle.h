@@ -46,7 +46,7 @@ public:
 	 * Destroys the instance.
 	 * NOTE: This method does nothing. It is down to derived instances to know how to release their handle
 	 */
-	virtual ~Handle()=0
+	virtual ~Handle()
 	{
 		// It's down to the derived class to know how to release the handle
 	}

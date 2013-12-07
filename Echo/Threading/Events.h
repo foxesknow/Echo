@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Echo/tstring.h>
 #include <Echo/WaitHandle.h>
 #include <Echo/HandleTraits.h>
 
@@ -31,11 +32,12 @@ protected:
 	 * Initializes the instance
 	 * @param isManual  true for a manual reset event, false for an auto reset event
 	 * @param initialState  the initial state for the event
+	 * @param name  an optional name for the event
 	 */
-	Event(bool isManual, InitialState initialState)
+	Event(bool isManual, InitialState initialState, const TCHAR *name)
 	{
 		BOOL signalled=(initialState==InitialState::Signalled ? TRUE : FALSE);
-		auto handle=::CreateEvent(nullptr,isManual,signalled,nullptr);
+		auto handle=::CreateEvent(nullptr,isManual,signalled,name);
 
 		if(handle==Traits::InvalidValue())
 		{
@@ -107,7 +109,16 @@ public:
 	 * Initializes the instance
 	 * @param initialState  the initial state of the event
 	 */
-	explicit ManualResetEvent(InitialState initialState) : Event(true,initialState)
+	explicit ManualResetEvent(InitialState initialState) : Event(true,initialState,nullptr)
+	{
+	}
+
+	/**
+	 * Initializes the instance
+	 * @param initialState  the initial state of the event
+	 * @param name  an optional name for the event
+	 */
+	ManualResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true,initialState,name.c_str())
 	{
 	}
 
@@ -167,7 +178,16 @@ public:
 	 * Initializes the instance
 	 * @param initialState  the initial state of the event
 	 */
-	explicit AutoResetEvent(InitialState initialState) : Event(false,initialState)
+	explicit AutoResetEvent(InitialState initialState) : Event(false,initialState,nullptr)
+	{
+	}
+
+	/**
+	 * Initializes the instance
+	 * @param initialState  the initial state of the event
+	 * @param name  an optional name for the event
+	 */
+	AutoResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true,initialState,name.c_str())
 	{
 	}
 

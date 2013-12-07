@@ -89,6 +89,12 @@ public:
 		return handle;
 	}
 
+	void Flush(const void *address, SIZE_T bytesToFlush=0) const
+	{
+		auto success=::FlushViewOfFile(address,bytesToFlush);
+		if(!success) throw IOException(_T("Flush failed"));
+	}
+
 	/**
 	 * Maps a portion of the memory mapped file into memory
 	 * @params offset  the offset into the file to map
@@ -102,7 +108,7 @@ public:
 		DWORD high=static_cast<DWORD>(offset>>32);
 
 		void *address=::MapViewOfFile(UnderlyingHandle(),desiredAccess,high,low,bytesToMap);
-		if(address==nullptr) throw IOException(_T("could now map view into memory mapped file"));
+		if(address==nullptr) throw IOException(_T("Map failed"));
 
 		return address;
 	}
@@ -128,7 +134,7 @@ public:
 	void Unmap(const void *address) const
 	{
 		auto success=::UnmapViewOfFile(address);
-		if(!success) throw IOException(_T("could now unmap view"));
+		if(!success) throw IOException(_T("Unmap failed"));
 	}
 
 	/**

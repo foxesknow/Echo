@@ -89,6 +89,12 @@ public:
 		UnderlyingHandle(Traits::InvalidValue());
 	}
 
+	void Flush() const
+	{
+		auto success=::FlushFileBuffers(UnderlyingHandle());
+		if(!success) throw IOException(_T("Flush failed"));
+	}
+
 	/**
 	 * Returns the size of the file
 	 * @returns the size of the file
@@ -100,7 +106,7 @@ public:
 		LARGE_INTEGER size;
 		BOOL success=::GetFileSizeEx(UnderlyingHandle(),&size);
 
-		if(!success) throw IOException(_T("size failed"));
+		if(!success) throw IOException(_T("Size failed"));
 		return size.QuadPart;
 	}
 
