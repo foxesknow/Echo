@@ -4,7 +4,9 @@
 #include "tstring.h"
 #include "Exceptions.h"
 
-#include<mutex>
+#include <string>
+#include <mutex>
+#include <vector>
 
 namespace Echo {
 
@@ -74,6 +76,38 @@ public:
 		if(!success) throw WindowsException(_T("Username failed"));
 
 		return buffer;
+	}
+
+	/**
+	 * Returns the command line for the process
+	 */
+	static tstd::tstring CommandLine()
+	{
+		tstd::tstring commandLine=::GetCommandLine();
+		return commandLine;
+	}
+
+	/**
+	 * Returns the command line as a vector, similar to argc/argv in main()
+	 */
+	static std::vector<tstd::tstring> CommandLineAsVector()
+	{
+		int argCount=0;
+		LPWSTR *argList=::CommandLineToArgvW(::GetCommandLineW(),&argCount);
+		if(argList==nullptr) throw WindowsException(_T("CommandLineAsVector failed"));
+
+		std::vector<tstd::tstring> parts;
+
+		for(int i=0; i<argCount; i++)
+		{
+			std::wstring part=argList[i];
+			parts.push_back(tstd::to_tstring(part));
+		}
+
+		::LocalFree(argList);
+
+		return parts;
+		
 	}
 };
 
