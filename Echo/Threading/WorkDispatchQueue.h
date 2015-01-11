@@ -82,7 +82,7 @@ private:
 		{
 			std::deque<T> &data=SwitchActive();
 
-			// We can get exit the lock now
+			// We can exit the lock now
 			Unlock<CriticalSection> unlock(m_SyncRoot);
 
 			// Make sure we clear out the data regardless of what happens

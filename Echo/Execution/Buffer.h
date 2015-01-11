@@ -12,7 +12,7 @@ namespace Echo { namespace Execution {
 class Buffer
 {
 private:
-	void *m_Data;
+	BYTE *m_Data;
 	size_t m_Size;
 
 public:

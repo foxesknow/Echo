@@ -131,7 +131,7 @@ public:
 		auto outcome=::WaitForMultipleObjects(size,handles,FALSE,ms);
 		if(outcome>=WAIT_OBJECT_0 && outcome<(WAIT_OBJECT_0+size))
 		{
-			// They were all signalled
+			// One was signalled
 			return static_cast<int>(outcome);
 		}
 		else if(outcome>=WAIT_ABANDONED_0 && outcome<(WAIT_ABANDONED_0+size))
