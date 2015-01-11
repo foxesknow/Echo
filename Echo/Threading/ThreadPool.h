@@ -32,7 +32,7 @@ private:
 		std::function<void()> m_Function;
 
 	public:
-		ThreadData(ThreadPool *pool, std::function<void()> function) : m_Pool(pool), m_Function(std::move(function))
+		ThreadData(ThreadPool *pool, const std::function<void()> &function) : m_Pool(pool), m_Function(function)
 		{
 		}
 
@@ -169,7 +169,7 @@ public:
 	{
 		EnsureRunning();
 
-		auto threadData=new ThreadData(this,function);
+		auto threadData=new ThreadData(this,std::move(function));
 		auto work=::CreateThreadpoolWork(WorkCallback,threadData,&m_Environment);
 		::InterlockedIncrement(&m_OutstandingWork);
 		::SubmitThreadpoolWork(work);

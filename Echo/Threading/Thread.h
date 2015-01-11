@@ -41,7 +41,7 @@ public:
 	 * Initializes the instance
 	 * @param threadFunction  the function to execute on the thread
 	 */
-	Thread(std::function<void()> threadFunction) : m_ThreadFunction(threadFunction)
+	Thread(const std::function<void()> &threadFunction) : m_ThreadFunction(threadFunction)
 	{
 
 	}
