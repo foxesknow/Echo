@@ -2,4 +2,3 @@
 
 #include <Windows.h>
 
-#define ECHO_NOEXCEPT

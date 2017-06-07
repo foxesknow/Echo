@@ -15,7 +15,7 @@ protected:
 	 * Initializes the instance
 	 * @param handle  the handle to attach to the instance
 	 */
-	Handle(HANDLE handle) ECHO_NOEXCEPT : m_Handle(handle)
+	Handle(HANDLE handle) noexcept : m_Handle(handle)
 	{
 	}
 
@@ -27,7 +27,7 @@ protected:
 	 * Swaps two handles
 	 * @param rhs  the object to swap handles with
 	 */
-	void Swap(Handle &rhs) ECHO_NOEXCEPT
+	void Swap(Handle &rhs) noexcept
 	{
 		std::swap(m_Handle,rhs.m_Handle);
 	}
@@ -36,7 +36,7 @@ protected:
 	 * Sets the underlying OS handle
 	 * @param handle  the handle to use
 	 */
-	void UnderlyingHandle(HANDLE handle) ECHO_NOEXCEPT
+	void UnderlyingHandle(HANDLE handle) noexcept
 	{
 		m_Handle=handle;
 	}
@@ -55,7 +55,7 @@ public:
 	 * Gets the underlying OS handle
 	 * @returns an OS handle
 	 */
-	HANDLE UnderlyingHandle() const ECHO_NOEXCEPT
+	HANDLE UnderlyingHandle() const noexcept
 	{
 		return m_Handle;
 	}

@@ -15,106 +15,94 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Echo\ActionDispatchQueue.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\AsyncResult.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Buffer.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\ConditionalVariable.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\CriticalSection.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Environment.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Events.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Exceptions.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\File.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Handle.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\HandleTraits.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IFunctionDispatcher.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\ImmediateWorkItemDispatcher.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IOException.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\IReaderWriter.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Lock.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\MemoryMappedFile.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\MethodCall.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\MultiWaiter.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Mutex.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\OnDestruct.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Overlapped.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Semaphore.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Thread.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\ThreadException.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\ThreadPool.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\tstring.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
     <ClInclude Include="Echo\WaitHandle.h">
       <Filter>Echo</Filter>
     </ClInclude>
     <ClInclude Include="Echo\WinInclude.h">
       <Filter>Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Exceptions.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\HandleTraits.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\tstring.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\CriticalSection.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\Events.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\Lock.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\ConditionalVariable.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\All.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\Thread.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\ThreadPool.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\ThreadException.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\WorkDispatchQueue.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Execution\All.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Execution\OnDestruct.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\ActionDispatchQueue.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\ImmediateWorkItemDispatcher.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\All.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Handle.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\IOException.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\Overlapped.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\File.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Execution\Buffer.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\AsyncResult.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\IFunctionDispatcher.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\Mutex.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Threading\Semaphore.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\All.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\IReaderWriter.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\IO\MemoryMappedFile.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\MultiWaiter.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Execution\MethodCall.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Environment.h">
+    <ClInclude Include="Echo\WorkDispatchQueue.h">
       <Filter>Echo</Filter>
     </ClInclude>
   </ItemGroup>

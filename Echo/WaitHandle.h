@@ -44,7 +44,7 @@ private:
 protected:
 	/// Initializes the instance
 	/// @param handle  the handle to attach to the instance
-	WaitHandle(HANDLE handle) : Handle(handle) ECHO_NOEXCEPT
+	WaitHandle(HANDLE handle) noexcept : Handle(handle)
 	{
 	}
 
@@ -100,7 +100,7 @@ protected:
 	/**
 	 * Initializes the instance with an invalid handle
 	 */
-	WaitHandleImpl() : WaitHandle(TRAITS::InvalidValue()) ECHO_NOEXCEPT
+	WaitHandleImpl() noexcept : WaitHandle(TRAITS::InvalidValue())
 	{
 	}
 
@@ -109,7 +109,7 @@ protected:
 	 * Initializes the instace
 	 * @param handle  the handle to attach to the instance
 	 */
-	WaitHandleImpl(HANDLE handle) : WaitHandle(handle) ECHO_NOEXCEPT
+	WaitHandleImpl(HANDLE handle) noexcept : WaitHandle(handle)
 	{
 	}
 
@@ -117,7 +117,7 @@ protected:
 	 * Moves an instance
 	 * @param rhs  the instance to move into our instance
 	 */
-	WaitHandleImpl(WaitHandleImpl &&rhs) : WaitHandle(TRAITS::InvalidValue()) ECHO_NOEXCEPT
+	WaitHandleImpl(WaitHandleImpl &&rhs) noexcept : WaitHandle(TRAITS::InvalidValue())
 	{
 		Swap(rhs);
 	}
@@ -128,7 +128,7 @@ protected:
 	/**
 	 * Closes the handle, if open
 	 */
-	void Close() ECHO_NOEXCEPT
+	void Close() noexcept
 	{
 		Traits::Destroy(UnderlyingHandle());
 		UnderlyingHandle(Traits::InvalidValue());
@@ -148,7 +148,7 @@ public:
 	 * Sets the handle to an invalid value and returns the OS value
 	 * @returns the OS handle
 	 */
-	virtual HANDLE Detach() override ECHO_NOEXCEPT
+	virtual HANDLE Detach() noexcept override
 	{
 		HANDLE handle=UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());
