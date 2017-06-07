@@ -39,7 +39,7 @@ public:
 	/**
 	 * Enters the critical section
 	 */
-	void Enter()const noexcept
+	void Enter()noexcept
 	{
 		::EnterCriticalSection(&m_Section);
 	}
@@ -48,7 +48,7 @@ public:
 	 * Attempts to enter the critical section
 	 * @returns true if the critical section was entered, otherwise false
 	 */
-	bool TryEnter()const noexcept
+	bool TryEnter()noexcept
 	{
 		return ::TryEnterCriticalSection(&m_Section)!=FALSE;
 	}
@@ -56,7 +56,7 @@ public:
 	/**
 	 * Exits the critical section
 	 */
-	void Exit()const noexcept
+	void Exit()noexcept
 	{
 		::LeaveCriticalSection(&m_Section);
 	}
@@ -64,7 +64,7 @@ public:
 	/**
 	 * Returns the underlying critical section
 	 */
-	CRITICAL_SECTION *Underlying()const noexcept
+	CRITICAL_SECTION *Underlying()noexcept
 	{
 		return &m_Section;
 	}
@@ -77,13 +77,13 @@ template<>
 class Lock<CriticalSection>
 {
 private:
-	const CriticalSection &m_Section;
+	CriticalSection &m_Section;
 
 public:
 	/**
 	 * Initializes the lock by entering the critical section
 	 */
-	Lock(const CriticalSection &section) : m_Section(section)
+	explicit Lock(CriticalSection &section) : m_Section(section)
 	{
 		m_Section.Enter();
 	}
@@ -109,13 +109,13 @@ template<>
 class Unlock<CriticalSection>
 {
 private:
-	const CriticalSection &m_Section;
+	CriticalSection &m_Section;
 
 public:
 	/**
 	 * Initializes the instance by exitting the critical section
 	 */
-	Unlock(const CriticalSection &section) : m_Section(section)
+	Unlock(CriticalSection &section) : m_Section(section)
 	{
 		m_Section.Exit();
 	}
@@ -137,14 +137,14 @@ template<>
 class TryLock<CriticalSection>
 {
 private:
-	const CriticalSection &m_Section;
+	CriticalSection &m_Section;
 	const bool m_Locked;
 
 public:
 	/**
 	 * Initializes the instance by attempting to enter a critical section
 	 */
-	TryLock(const CriticalSection &section) : m_Section(section), m_Locked(section.TryEnter())
+	TryLock(CriticalSection &section) : m_Section(section), m_Locked(section.TryEnter())
 	{
 	}
 

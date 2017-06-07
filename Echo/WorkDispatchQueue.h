@@ -27,7 +27,7 @@ private:
 
 	IFunctionDispatcher &m_Dispatcher;
 	
-	const CriticalSection m_SyncRoot;
+	mutable CriticalSection m_SyncRoot;
 	const AutoResetEvent m_StopEvent;
 
 	bool m_ThreadActive=false;

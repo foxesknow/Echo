@@ -4,6 +4,8 @@
 #include "Exceptions.h"
 #include "CriticalSection.h"
 
+#include <chrono>
+
 namespace Echo 
 {
 

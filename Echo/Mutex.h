@@ -98,13 +98,13 @@ template<>
 class Lock<Mutex>
 {
 private:
-	const Mutex &m_Mutex;
+	Mutex &m_Mutex;
 
 public:
 	/**
 	 * Initializes the instance my waiting on the mutex
 	 */
-	explicit Lock(const Mutex &mutex) : m_Mutex(mutex)
+	explicit Lock(Mutex &mutex) : m_Mutex(mutex)
 	{
 		m_Mutex.Wait();
 	}
