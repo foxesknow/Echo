@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Echo/OnDestruct.h>
+#include "OnDestruct.h"
 
 
 #include "CriticalSection.h"

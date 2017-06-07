@@ -2,10 +2,10 @@
 
 #include <utility>
 
-#include <Echo/WinInclude.h>
-#include <Echo/HandleTraits.h>
-#include <Echo/Handle.h>
-#include <Echo/tstring.h>
+#include "WinInclude.h"
+#include "HandleTraits.h"
+#include "Handle.h"
+#include "tstring.h"
 
 #include "File.h"
 

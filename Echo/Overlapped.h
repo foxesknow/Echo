@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Echo/WinInclude.h>
-#include <Echo/Events.h>
+#include "WinInclude.h"
+#include "Events.h"
 
 namespace Echo { namespace IO {
 

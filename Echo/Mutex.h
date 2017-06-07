@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Echo/WaitHandle.h>
-#include <Echo/HandleTraits.h>
-#include <Echo/tstring.h>
+#include "WaitHandle.h"
+#include "HandleTraits.h"
+#include "tstring.h"
 
 #include "Lock.h"
 #include "ThreadException.h"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Echo/WinInclude.h>
-#include <Echo/Lock.h>
+#include "WinInclude.h"
+#include "Lock.h"
 
 
 namespace Echo 

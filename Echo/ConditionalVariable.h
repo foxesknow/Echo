@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Echo/WinInclude.h>
-#include <Echo/Exceptions.h>
-#include <Echo/CriticalSection.h>
+#include "WinInclude.h"
+#include "Exceptions.h"
+#include "CriticalSection.h"
 
 namespace Echo 
 {

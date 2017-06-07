@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Echo/WinInclude.h>
-#include <Echo/Handle.h>
-#include <Echo/HandleTraits.h>
-#include <Echo/Exceptions.h>
+#include "WinInclude.h"
+#include "Handle.h"
+#include "HandleTraits.h"
+#include "Exceptions.h"
 
 #include <chrono>
 #include <utility>
