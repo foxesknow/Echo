@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utility>
-
+#include <cstdint>
 #include "WinInclude.h"
 
 namespace Echo
@@ -13,7 +13,7 @@ namespace Echo
 class Buffer
 {
 private:
-	BYTE *m_Data;
+	std::uint8_t *m_Data;
 	size_t m_Size;
 
 public:
@@ -23,7 +23,7 @@ public:
 	 */
 	explicit Buffer(size_t size)
 	{
-		m_Data=new BYTE[size];
+		m_Data=new std::uint8_t[size];
 		m_Size=size;
 	}
 
@@ -113,7 +113,7 @@ public:
 	template<typename T>
 	T *DataAs() noexcept
 	{
-		return static_cast<T*>(m_Data);
+		return reinterpret_cast<T*>(m_Data);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public:
 	template<typename T>
 	const T *DataAs() const noexcept
 	{
-		return static_cast<T*>(m_Data);
+		return reinterpret_cast<T*>(m_Data);
 	}
 };
 
