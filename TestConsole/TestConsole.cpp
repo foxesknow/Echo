@@ -9,7 +9,7 @@ Echo::ReadWriteLock readWrite;
 
 int GetLock()
 {
-	Echo::Lock<Echo::ReadWriteLock> lock(readWrite);
+	Echo::Guard<Echo::ReadWriteLock> guard(readWrite);
 	return 1;
 }
 

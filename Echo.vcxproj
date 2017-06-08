@@ -26,13 +26,14 @@
     <ClInclude Include="Echo\ImmediateWorkItemDispatcher.h" />
     <ClInclude Include="Echo\IOException.h" />
     <ClInclude Include="Echo\IReaderWriter.h" />
-    <ClInclude Include="Echo\Lock.h" />
+    <ClInclude Include="Echo\Guard.h" />
     <ClInclude Include="Echo\MemoryMappedFile.h" />
     <ClInclude Include="Echo\MethodCall.h" />
     <ClInclude Include="Echo\MultiWaiter.h" />
     <ClInclude Include="Echo\Mutex.h" />
     <ClInclude Include="Echo\OnDestruct.h" />
     <ClInclude Include="Echo\Overlapped.h" />
+    <ClInclude Include="Echo\ReadWriteLock.h" />
     <ClInclude Include="Echo\Semaphore.h" />
     <ClInclude Include="Echo\Thread.h" />
     <ClInclude Include="Echo\ThreadException.h" />

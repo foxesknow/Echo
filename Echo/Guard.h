@@ -6,17 +6,17 @@ namespace Echo
 {
 
 template<typename T>
-class Lock
+class Guard
 {
 };
 
 template<typename T>
-class Unlock
+class Unguard
 {
 };
 
 template<typename T>
-class TryLock
+class TryGuard
 {
 };
 

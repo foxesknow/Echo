@@ -77,14 +77,14 @@ private:
 	 */
 	void ProcessQueue()
 	{
-		Lock<CriticalSection> lock(m_SyncRoot);
+		Guard<CriticalSection> lock(m_SyncRoot);
 
 		while(m_ActiveData->size()!=0 && m_StopProcessing==false)
 		{
 			std::deque<T> &data=SwitchActive();
 
 			// We can exit the lock now
-			Unlock<CriticalSection> unlock(m_SyncRoot);
+			Unguard<CriticalSection> unlock(m_SyncRoot);
 
 			// Make sure we clear out the data regardless of what happens
 			Echo::OnDestruct onDestruct([&]{data.clear();});
@@ -164,7 +164,7 @@ public:
 	 */
 	void Enqueue(const T &data)
 	{
-		Lock<CriticalSection> lock(m_SyncRoot);
+		Guard<CriticalSection> lock(m_SyncRoot);
 		DoEnqueue(data);
 	}
 
@@ -175,7 +175,7 @@ public:
 	 */
 	bool TryEnqueue(const T &data)
 	{
-		Lock<CriticalSection> lock(m_SyncRoot);
+		Guard<CriticalSection> lock(m_SyncRoot);
 
 		if(m_Shutdown) return false;
 
@@ -192,7 +192,7 @@ public:
 		bool shouldWait=false;
 
 		{
-			Lock<CriticalSection> lock(m_SyncRoot);
+			Guard<CriticalSection> lock(m_SyncRoot);
 
 			if(m_Shutdown) return;
 
@@ -207,6 +207,21 @@ public:
 		{
 			m_StopEvent.Wait();
 		}
+	}
+};
+
+
+class FunctionWorkDispatchQueue : public WorkDispatchQueue<std::function<void()>>
+{
+protected:
+	void ProcessItem(std::function<void()> &func) override
+	{
+		func();
+	}
+
+public:
+	FunctionWorkDispatchQueue(IFunctionDispatcher &dispatcher) : WorkDispatchQueue(dispatcher)
+	{
 	}
 };
 

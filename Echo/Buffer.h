@@ -70,9 +70,9 @@ public:
 	/**
 	 * Fills the contents of the buffer with a value
 	 */
-	void Fill(BYTE value)
+	void Fill(int value)
 	{
-		::FillMemory(m_Data,m_Size,value);
+		::memset(m_Data,value,m_Size);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "WinInclude.h"
-#include "Lock.h"
+#include "Guard.h"
 
 
 namespace Echo 
@@ -74,7 +74,7 @@ public:
  * Locks a critical section
  */
 template<>
-class Lock<CriticalSection>
+class Guard<CriticalSection>
 {
 private:
 	CriticalSection &m_Section;
@@ -83,19 +83,18 @@ public:
 	/**
 	 * Initializes the lock by entering the critical section
 	 */
-	explicit Lock(CriticalSection &section) : m_Section(section)
+	explicit Guard(CriticalSection &section) : m_Section(section)
 	{
 		m_Section.Enter();
 	}
 
-	Lock(const Lock &)=delete;
-
-	Lock &operator=(Lock &)=delete;
+	Guard(const Guard &)=delete;
+	Guard &operator=(Guard &)=delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
 	 */
-	~Lock() noexcept
+	~Guard() noexcept
 	{
 		m_Section.Exit();
 	}
@@ -106,7 +105,7 @@ public:
  * Unlocks a critical section
  */
 template<>
-class Unlock<CriticalSection>
+class Unguard<CriticalSection>
 {
 private:
 	CriticalSection &m_Section;
@@ -115,26 +114,25 @@ public:
 	/**
 	 * Initializes the instance by exitting the critical section
 	 */
-	Unlock(CriticalSection &section) : m_Section(section)
+	Unguard(CriticalSection &section) : m_Section(section)
 	{
 		m_Section.Exit();
 	}
 
-	Unlock(const Unlock &)=delete;
-
-	Unlock &operator=(Unlock &)=delete;
+	Unguard(const Unguard &)=delete;
+	Unguard &operator=(Unguard &)=delete;
 
 	/**
 	 * Destroys the instance by entering the critical section
 	 */
-	~Unlock()
+	~Unguard()
 	{
 		m_Section.Enter();
 	}
 };
 
 template<>
-class TryLock<CriticalSection>
+class TryGuard<CriticalSection>
 {
 private:
 	CriticalSection &m_Section;
@@ -144,12 +142,12 @@ public:
 	/**
 	 * Initializes the instance by attempting to enter a critical section
 	 */
-	TryLock(CriticalSection &section) : m_Section(section), m_Locked(section.TryEnter())
+	TryGuard(CriticalSection &section) : m_Section(section), m_Locked(section.TryEnter())
 	{
 	}
 
-	TryLock(const TryLock &)=delete;
-	TryLock &operator=(TryLock &)=delete;
+	TryGuard(const TryGuard &)=delete;
+	TryGuard &operator=(TryGuard &)=delete;
 
 	/**
 	 * Inidicates if the critical section was locked
@@ -162,7 +160,7 @@ public:
 	/**
 	 * Destroys the instance exitting the section if it was entered
 	 */
-	~TryLock()
+	~TryGuard()
 	{
 		if(m_Locked)
 		{

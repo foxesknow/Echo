@@ -60,9 +60,6 @@
     <ClInclude Include="Echo\IReaderWriter.h">
       <Filter>Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Lock.h">
-      <Filter>Echo</Filter>
-    </ClInclude>
     <ClInclude Include="Echo\MemoryMappedFile.h">
       <Filter>Echo</Filter>
     </ClInclude>
@@ -103,6 +100,12 @@
       <Filter>Echo</Filter>
     </ClInclude>
     <ClInclude Include="Echo\WorkDispatchQueue.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\ReadWriteLock.h">
+      <Filter>Echo</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo\Guard.h">
       <Filter>Echo</Filter>
     </ClInclude>
   </ItemGroup>

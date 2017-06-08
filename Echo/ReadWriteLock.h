@@ -1,7 +1,7 @@
 #pragma once
 
 #include "WinInclude.h"
-#include "Lock.h"
+#include "Guard.h"
 
 namespace Echo
 {
@@ -34,6 +34,14 @@ public:
 	}
 
 	/**
+	* Enters the lock in shared mode
+	*/
+	void EnterShared()noexcept
+	{
+		::AcquireSRWLockShared(&m_Lock);
+	}
+
+	/**
 	* Attempts to enter the lock in exclusive mode
 	* @returns true if the lock section was entered, otherwise false
 	*/
@@ -49,13 +57,21 @@ public:
 	{
 		::ReleaseSRWLockExclusive(&m_Lock);
 	}
+
+	/**
+	* Exits a lock that was acquired in shared mode
+	*/
+	void ExitShared()noexcept
+	{
+		::ReleaseSRWLockShared(&m_Lock);
+	}
 };
 
 /**
- * Locks a critical section
+ * Locks a read write lock in exclusive mode
  */
 template<>
-class Lock<ReadWriteLock>
+class Guard<ReadWriteLock>
 {
 private:
 	ReadWriteLock &m_Lock;
@@ -64,21 +80,52 @@ public:
 	/**
 	 * Exclusively acquires the read write lock
 	 */
-	explicit Lock(ReadWriteLock &lock) : m_Lock(lock)
+	explicit Guard(ReadWriteLock &lock) : m_Lock(lock)
 	{
 		m_Lock.Enter();
 	}
 
-	Lock(const Lock &)=delete;
-	Lock &operator=(Lock &)=delete;
+	Guard(const Guard &)=delete;
+	Guard &operator=(Guard &)=delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
 	 */
-	~Lock() noexcept
+	~Guard() noexcept
 	{
 		m_Lock.Exit();
 	}
 };
+
+
+/**
+ * Locks a read write lock in shared mode
+ */
+class GuardShared
+{
+private:
+	ReadWriteLock &m_Lock;
+
+public:
+	/**
+	 * Exclusively acquires the read write lock
+	 */
+	explicit GuardShared(ReadWriteLock &lock) : m_Lock(lock)
+	{
+		m_Lock.EnterShared();
+	}
+
+	GuardShared(const GuardShared &)=delete;
+	GuardShared &operator=(GuardShared &)=delete;
+
+	/**
+	 * Destroys the lock be exitting the critical section
+	 */
+	~GuardShared() noexcept
+	{
+		m_Lock.ExitShared();
+	}
+};
+
 
 } // end of namespace

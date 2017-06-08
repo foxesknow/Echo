@@ -3,7 +3,8 @@
 #include "WinInclude.h"
 #include "Events.h"
 
-namespace Echo { namespace IO {
+namespace Echo 
+{
 
 /**
  * Wraps an OVERLAPPED structure with some extra features
@@ -23,7 +24,7 @@ public:
 	/**
 	 * Attaches an event to the hEvent member
 	 */
-	void Attach(const Echo::Threading::Event &event)
+	void Attach(const Echo::Event &event)
 	{
 		hEvent=event.UnderlyingHandle();
 	}
@@ -41,4 +42,4 @@ public:
 	}
 };
 
-}} // end of namespace
+} // end of namespace

@@ -68,7 +68,7 @@ public:
 	 */
 	bool WaitAll() const
 	{
-		WaitAll(Infinite);
+		return WaitAll(Infinite);
 	}
 
 	/**

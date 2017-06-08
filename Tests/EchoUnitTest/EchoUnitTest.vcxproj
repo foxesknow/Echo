@@ -89,13 +89,25 @@
   <ItemGroup>
     <ClCompile Include="ActionDispatchQueueTests.cpp" />
     <ClCompile Include="BufferTests.cpp" />
-    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="CriticalSectionTests.cpp" />
+    <ClCompile Include="EventsTests.cpp" />
+    <ClCompile Include="FileTests.cpp" />
+    <ClCompile Include="MemoryMappedFileTests.cpp" />
+    <ClCompile Include="MethodCallTests.cpp" />
+    <ClCompile Include="MultiWaiterTests.cpp" />
+    <ClCompile Include="MutexTests.cpp" />
     <ClCompile Include="OnDestructTests.cpp" />
+    <ClCompile Include="OverlappedTests.cpp" />
+    <ClCompile Include="ReadWriteLockTests.cpp" />
+    <ClCompile Include="SemaphoreTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ThreadPoolTests.cpp" />
+    <ClCompile Include="ThreadTests.cpp" />
     <ClCompile Include="tstring_tests.cpp" />
+    <ClCompile Include="WorkDispatchQueueTests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

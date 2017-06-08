@@ -3,7 +3,7 @@
 #include "WaitHandle.h"
 #include "HandleTraits.h"
 
-#include "Lock.h"
+#include "Guard.h"
 #include "ThreadException.h"
 
 #include <utility>
@@ -90,6 +90,36 @@ public:
 		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
 
 		return Semaphore(handle);
+	}
+};
+
+/**
+ * Locks a semaphore
+ */
+template<>
+class Guard<Semaphore>
+{
+private:
+	Semaphore &m_Semaphore;
+
+public:
+	/**
+	 * Initializes the instance my waiting on the semaphore
+	 */
+	explicit Guard(Semaphore &semaphore) : m_Semaphore(semaphore)
+	{
+		m_Semaphore.Wait();
+	}
+
+	Guard(const Guard &)=delete;
+	Guard &operator=(Guard &)=delete;
+
+	/**
+	 * Destroys the instance by releasing the mutex
+	 */
+	~Guard()
+	{
+		m_Semaphore.Release();
 	}
 };
 

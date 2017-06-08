@@ -56,7 +56,7 @@ public:
 	/**
 	 * Closes the file, if open
 	 */
-	~File()override noexcept
+	~File()noexcept override
 	{
 		HANDLE handle=UnderlyingHandle();
 		Traits::Destroy(handle);
@@ -83,7 +83,7 @@ public:
 	/**
 	 * Closes the file, if open
 	 */
-	virtual void Close() override noexcept
+	virtual void Close()noexcept override
 	{
 		HANDLE handle=UnderlyingHandle();
 		Traits::Destroy(handle);
@@ -245,7 +245,7 @@ public:
 	 * Sets the handle to an invalid value and returns the OS value
 	 * @returns the OS handle
 	 */
-	virtual HANDLE Detach() override noexcept
+	virtual HANDLE Detach()noexcept override
 	{
 		HANDLE handle=UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());

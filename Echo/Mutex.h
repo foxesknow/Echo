@@ -4,13 +4,19 @@
 #include "HandleTraits.h"
 #include "tstring.h"
 
-#include "Lock.h"
+#include "Guard.h"
 #include "ThreadException.h"
 
 #include <utility>
 
 namespace Echo 
 {
+
+enum class Ownership
+{
+	Owned,
+	NotOwned
+};
 
 /**
  * Wraps a mutex
@@ -29,17 +35,19 @@ public:
 	/**
 	 * Initializes the instance
 	 */
-	Mutex()
+	Mutex(Ownership ownership)
 	{
-		auto handle=::CreateMutex(nullptr,FALSE,nullptr);
+		BOOL isOwned=(ownership==Ownership::Owned ? TRUE : FALSE);
+		auto handle=::CreateMutex(nullptr,isOwned,nullptr);
 		if(handle==Traits::InvalidValue()) throw ThreadException(_T("could not create mutex"));
 
 		UnderlyingHandle(handle);
 	}
 
-	Mutex(const tstd::tstring &mutexName)
+	Mutex(Ownership ownership, const tstd::tstring &mutexName)
 	{
-		auto handle=::CreateMutex(nullptr,FALSE,mutexName.c_str());
+		BOOL isOwned=(ownership==Ownership::Owned ? TRUE : FALSE);
+		auto handle=::CreateMutex(nullptr,isOwned,mutexName.c_str());
 		if(handle==Traits::InvalidValue()) throw ThreadException(_T("could not create mutex"));
 
 		UnderlyingHandle(handle);
@@ -95,7 +103,7 @@ public:
  * Locks a mutex
  */
 template<>
-class Lock<Mutex>
+class Guard<Mutex>
 {
 private:
 	Mutex &m_Mutex;
@@ -104,18 +112,18 @@ public:
 	/**
 	 * Initializes the instance my waiting on the mutex
 	 */
-	explicit Lock(Mutex &mutex) : m_Mutex(mutex)
+	explicit Guard(Mutex &mutex) : m_Mutex(mutex)
 	{
 		m_Mutex.Wait();
 	}
 
-	Lock(const Lock &)=delete;
-	Lock &operator=(Lock &)=delete;
+	Guard(const Guard &)=delete;
+	Guard &operator=(Guard &)=delete;
 
 	/**
 	 * Destroys the instance by releasing the mutex
 	 */
-	~Lock()
+	~Guard()
 	{
 		m_Mutex.Release();
 	}
