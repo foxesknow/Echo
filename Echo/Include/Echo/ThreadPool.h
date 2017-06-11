@@ -18,9 +18,9 @@ namespace Echo
 class ThreadPool : public IFunctionDispatcher
 {
 private:
-	PTP_POOL m_Pool;
+	PTP_POOL m_Pool = nullptr;
 	TP_CALLBACK_ENVIRON m_Environment;
-	PTP_CLEANUP_GROUP m_CleanupGroup;
+	PTP_CLEANUP_GROUP m_CleanupGroup = nullptr;
 
 	bool m_CancelOutstanding=true;
 
@@ -84,9 +84,17 @@ public:
 	/**
 	 * Initializes the instance
 	 */
-	ThreadPool() : m_Pool(nullptr)
+	ThreadPool()
 	{
+		m_Pool = ::CreateThreadpool(nullptr);
+		if(m_Pool == nullptr) throw WindowsException(_T("Failed to create threadpool"));
 	}
+
+	ThreadPool(const ThreadPool&)=delete;
+	ThreadPool(ThreadPool&&)=delete;
+
+	ThreadPool &operator=(const ThreadPool&)=delete;
+	ThreadPool &operator=(ThreadPool&&)=delete;
 
 	/**
 	 * Destroys the instance.
@@ -94,14 +102,11 @@ public:
 	 */
 	~ThreadPool()
 	{
-		if(m_Pool!=nullptr) 
-		{
-			::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup ,m_CancelOutstanding, nullptr);
+		if(m_CleanupGroup) ::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup ,m_CancelOutstanding, nullptr);
 			
-			::CloseThreadpool(m_Pool);
-			::CloseThreadpoolCleanupGroup(m_CleanupGroup);
-			::DestroyThreadpoolEnvironment(&m_Environment);
-		}
+		::CloseThreadpool(m_Pool);
+		if(m_CleanupGroup)  ::CloseThreadpoolCleanupGroup(m_CleanupGroup);
+		::DestroyThreadpoolEnvironment(&m_Environment);
 	}
 
 	/**
@@ -109,12 +114,13 @@ public:
 	 */
 	void Start()
 	{
-		if(m_Pool != nullptr) throw ThreadException(_T("thread pool already started"));
-		m_Pool = ::CreateThreadpool(nullptr);
+		if(m_CleanupGroup != nullptr) throw ThreadException(_T("thread pool already started"));
 
 		::InitializeThreadpoolEnvironment(&m_Environment);		
 
 		m_CleanupGroup = ::CreateThreadpoolCleanupGroup();
+		if(m_CleanupGroup == nullptr) throw WindowsException(_T("Failed to create threadpool cleanup group"));
+
 		::SetThreadpoolCallbackCleanupGroup(&m_Environment, m_CleanupGroup, Cleanup);
 
 		::SetThreadpoolCallbackPool(&m_Environment, m_Pool);
@@ -125,7 +131,7 @@ public:
 	 */
 	LONG OutstandingWork()const noexcept
 	{
-		LONG outstanding = ::InterlockedCompareExchange(&m_OutstandingWork,0,0);
+		LONG outstanding = ::InterlockedCompareExchange(&m_OutstandingWork, 0, 0);
 		return outstanding;
 	}
 
@@ -150,8 +156,8 @@ public:
 	 */
 	void MinimumThreads(DWORD value)
 	{
-		EnsureRunning();
-		::SetThreadpoolThreadMinimum(m_Pool, value);
+		auto success = ::SetThreadpoolThreadMinimum(m_Pool, value);
+		if(!success) throw WindowsException(_T("Failed to set minimum number of threads"));
 	}
 	
 	/**
@@ -159,7 +165,6 @@ public:
 	 */
 	void MaximumThreads(DWORD value)
 	{
-		EnsureRunning();
 		::SetThreadpoolThreadMaximum(m_Pool, value);
 	}
 
@@ -172,6 +177,8 @@ public:
 
 		auto threadData=new ThreadData(this, std::move(function));
 		auto work=::CreateThreadpoolWork(WorkCallback,threadData ,&m_Environment);
+		if(work == nullptr) throw WindowsException(_T("Failed to create threadpool work"));
+		
 		::InterlockedIncrement(&m_OutstandingWork);
 		::SubmitThreadpoolWork(work);
 	}

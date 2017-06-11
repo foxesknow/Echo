@@ -10,6 +10,15 @@ namespace EchoUnitTest
 
 TEST_CLASS(ReadWriteLockTests)
 {
+private:
+	Echo::UniqueGuard<Echo::ReadWriteLock> CreateGuard(Echo::ReadWriteLock &rwLock)
+	{
+		using namespace Echo;
+		
+		UniqueGuard<ReadWriteLock> guard(rwLock);
+		return guard;
+	}
+
 public:
 	TEST_METHOD(Construct)
 	{
@@ -32,6 +41,14 @@ public:
 
 		ReadWriteLock rwLock;
 		ReadWriteLockSharedGuard lock(rwLock);
+	}
+
+	TEST_METHOD(UniqueLocking)
+	{
+		using namespace Echo;
+
+		ReadWriteLock rwLock;
+		auto uniqueGuard = CreateGuard(rwLock);
 	}
 };
 

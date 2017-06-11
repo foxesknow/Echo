@@ -10,6 +10,15 @@ namespace EchoUnitTest
 
 TEST_CLASS(MutexTests)
 {
+private:
+	Echo::UniqueGuard<Echo::Mutex> CreateGuard(Echo::Mutex &mutex)
+	{
+		using namespace Echo;
+		
+		UniqueGuard<Mutex> guard(mutex);
+		return guard;
+	}
+
 public:
 	TEST_METHOD(Construct)
 	{
@@ -34,6 +43,14 @@ public:
 		Mutex mutex(Ownership::NotOwned);
 		mutex.Wait();
 		mutex.Release();
+	}
+
+	TEST_METHOD(UniqueLocking)
+	{
+		using namespace Echo;
+
+		Mutex mutex(Ownership::NotOwned);
+		auto uniqueGuard = CreateGuard(mutex);
 	}
 };
 

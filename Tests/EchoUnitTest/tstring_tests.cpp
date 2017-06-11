@@ -110,6 +110,18 @@ public:
 
 		Assert::IsTrue(converted=="hello",nullptr,LINE_INFO());
 	}
+
+	TEST_METHOD(from_string)
+	{
+		auto value = tstd::from_string<int>("10");
+		Assert::AreEqual(10, value);
+	}
+
+	TEST_METHOD(from_wstring)
+	{
+		auto value = tstd::from_string<int>(L"10");
+		Assert::AreEqual(10, value);
+	}
 };
 
 } // end of namesapce

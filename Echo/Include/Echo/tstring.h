@@ -112,6 +112,35 @@ inline std::wstring to_wstring(std::wstring &&t)
 }
 
 /**
+ * Converts a string to the specified type
+ */
+template<typename T>
+inline T from_string(const std::string &value)
+{
+	std::stringstream stream(value);
+
+	T t;
+	stream >> t;
+
+	return t;
+}
+
+/**
+ * Converts a string to the specified type
+ */
+template<typename T>
+inline T from_string(const std::wstring &value)
+{
+	std::wstringstream stream(value);
+
+	T t;
+	stream >> t;
+
+	return t;
+}
+
+
+/**
  * Trims leading and trailing whitespace from a string
  * @param text  the text to strip whitespace from
  * @params whitespace  the characters that are deemed to be whitespace

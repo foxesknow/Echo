@@ -4,6 +4,9 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <Echo\ThreadPool.h>
+#include <Echo\Events.h>
+
+#include <atomic>
 
 namespace EchoUnitTest 
 {
@@ -15,9 +18,31 @@ public:
 	{
 		using namespace Echo;
 
-		bool flag=false;
+		ThreadPool pool;
+	}
+
+	TEST_METHOD(RunMethodInPool)
+	{
+		using namespace Echo;
+
+		std::atomic<bool> flag=false;
+
+		ManualResetEvent event(InitialState::NonSignalled);
 
 		ThreadPool pool;
+		pool.MinimumThreads(4);
+		pool.MaximumThreads(16);
+
+		pool.Start();
+
+		pool.Submit([&]
+		{
+			flag = true;
+			event.Set();
+		});
+
+		event.Wait();
+		Assert::IsTrue(flag);
 	}
 };
 
