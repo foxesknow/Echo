@@ -86,7 +86,6 @@ public:
 	 */
 	bool Wait(CriticalSection &cs, const std::chrono::milliseconds &duration) const
 	{
-		auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 		return DoWaitCS(cs.Underlying(), duration);
 	}
 
@@ -125,7 +124,6 @@ public:
 	 * @param duration  how long to wait for
 	 * @returns true if condition was notified within the duration, otherwise false
 	 */
-	template<typename REP, typename PERIOD>
 	bool WaitShared(ReadWriteLock &rwLock, const std::chrono::milliseconds &duration) const
 	{
 		return DoWaitRW(rwLock.Underlying(), duration, CONDITION_VARIABLE_LOCKMODE_SHARED);
