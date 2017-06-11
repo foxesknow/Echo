@@ -1,8 +1,9 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Guard.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Guard.h>
 
+#include <utility>
 
 namespace Echo 
 {
@@ -35,6 +36,7 @@ public:
 	}
 
 	CriticalSection &operator=(const CriticalSection &)=delete;
+	CriticalSection &operator=(CriticalSection &&)=delete;
 
 	/**
 	 * Enters the critical section
@@ -89,7 +91,8 @@ public:
 	}
 
 	Guard(const Guard &)=delete;
-	Guard &operator=(Guard &)=delete;
+	Guard &operator=(const Guard &)=delete;
+	Guard &operator=(Guard &&)=delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
@@ -120,7 +123,8 @@ public:
 	}
 
 	Unguard(const Unguard &)=delete;
-	Unguard &operator=(Unguard &)=delete;
+	Unguard &operator=(const Unguard &)=delete;
+	Unguard &operator=(Unguard &&)=delete;
 
 	/**
 	 * Destroys the instance by entering the critical section
@@ -147,12 +151,13 @@ public:
 	}
 
 	TryGuard(const TryGuard &)=delete;
-	TryGuard &operator=(TryGuard &)=delete;
+	TryGuard &operator=(const TryGuard &)=delete;
+	TryGuard &operator=(TryGuard &&)=delete;
 
 	/**
 	 * Inidicates if the critical section was locked
 	 */
-	bool IsLocked()const
+	bool IsLocked() const
 	{
 		return m_Locked;
 	}
@@ -168,5 +173,49 @@ public:
 		}
 	}
 };
+
+template<>
+class UniqueGuard<CriticalSection>
+{
+private:
+	CriticalSection *m_Section;
+
+public:
+	/**
+	 * Initializes the lock by entering the critical section
+	 */
+	explicit UniqueGuard(CriticalSection &section) : m_Section(&section)
+	{
+		m_Section->Enter();
+	}
+
+	UniqueGuard(UniqueGuard &&rhs) : m_Section(nullptr)
+	{
+		std::swap(m_Section, rhs.m_Section);
+	}
+
+	UniqueGuard(const UniqueGuard &)=delete;
+	
+	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	{
+		if(this != &rhs)
+		{
+			std::swap(m_Section, rhs.m_Section);
+		}
+
+		return *this;
+	}
+
+	/**
+	 * Destroys the lock be exitting the critical section
+	 */
+	~UniqueGuard() noexcept
+	{
+		if(m_Section) m_Section->Exit();
+	}
+};
+
+using CriticalSectionGuard=Guard<CriticalSection>;
+using CriticalSectionUniqueGuard=UniqueGuard<CriticalSection>;
 
 } // end of namespace

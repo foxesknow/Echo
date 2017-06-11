@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <sstream>
 #include <tchar.h>
-
+#include <utility>
 
 namespace tstd
 {
@@ -39,6 +39,7 @@ namespace tstd
 
 	inline tstd::tstring to_tstring(const std::string &t)	{tstring temp; temp.assign(t.begin(),t.end()); return temp;}
 	inline tstd::tstring to_tstring(const std::wstring &t)	{return t;}
+	inline tstd::tstring to_tstring(std::wstring &&t)		{return tstd::tstring(std::move(t));}
 
 #else
 
@@ -54,6 +55,8 @@ namespace tstd
 
 	inline tstd::tstring to_tstring(const std::string &t)	{return t;}
 	inline tstd::tstring to_tstring(const std::wstring &t)	{tstring temp; temp.assign(t.begin(),t.end()); return temp;}
+	inline tstd::tstring to_tstring(std::string &&t)		{return tstd::tstring(std::move(t));}
+
 #endif
 
 /**
@@ -70,8 +73,16 @@ inline std::string to_string(const std::string &t)
 inline std::string to_string(const std::wstring &t)		
 {
 	std::string temp; 
-	temp.assign(t.begin(),t.end()); 
+	temp.assign(t.begin(), t.end()); 
 	return temp;
+}
+
+/**
+ * Converts a string to a string
+ */
+inline std::string to_string(std::string &&t)			
+{
+	return std::string(std::move(t));
 }
 
 /**
@@ -80,7 +91,7 @@ inline std::string to_string(const std::wstring &t)
 inline std::wstring to_wstring(const std::string &t)	
 {
 	std::wstring temp; 
-	temp.assign(t.begin(),t.end()); 
+	temp.assign(t.begin(), t.end()); 
 	return temp;
 }
 
@@ -93,6 +104,14 @@ inline std::wstring to_wstring(const std::wstring &t)
 }
 
 /**
+ * Converts a string to a string
+ */
+inline std::wstring to_wstring(std::wstring &&t)		
+{
+	return std::wstring(std::move(t));
+}
+
+/**
  * Trims leading and trailing whitespace from a string
  * @param text  the text to strip whitespace from
  * @params whitespace  the characters that are deemed to be whitespace
@@ -100,13 +119,13 @@ inline std::wstring to_wstring(const std::wstring &t)
  */
 inline std::string trim(const std::string &text, const std::string &whitespace=" \t")
 {
-	auto begin=text.find_first_not_of(whitespace);
-	if(begin==std::string::npos) return "";
+	auto begin = text.find_first_not_of(whitespace);
+	if(begin == std::string::npos) return "";
 
-	auto end=text.find_last_not_of(whitespace);
-	auto range=(end-begin)+1;
+	auto end = text.find_last_not_of(whitespace);
+	auto range = (end - begin) + 1;
 
-	return text.substr(begin,range);
+	return text.substr(begin, range);
 }
 
 /**
@@ -117,13 +136,13 @@ inline std::string trim(const std::string &text, const std::string &whitespace="
  */
 inline std::wstring trim(const std::wstring &text, const std::wstring &whitespace=L" \t")
 {
-	auto begin=text.find_first_not_of(whitespace);
-	if(begin==std::string::npos) return L"";
+	auto begin = text.find_first_not_of(whitespace);
+	if(begin == std::string::npos) return L"";
 
-	auto end=text.find_last_not_of(whitespace);
-	auto range=(end-begin)+1;
+	auto end = text.find_last_not_of(whitespace);
+	auto range = (end - begin) + 1;
 
-	return text.substr(begin,range);
+	return text.substr(begin, range);
 }
 
 /**
@@ -133,8 +152,8 @@ inline std::wstring trim(const std::wstring &text, const std::wstring &whitespac
  */
 inline std::string to_upper(const std::string &text)
 {
-	std::string copy=text;
-	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
+	std::string copy = text;
+	std::transform(copy.begin(), copy.end(), copy.begin(), toupper);
 
 	return copy;
 }
@@ -146,8 +165,8 @@ inline std::string to_upper(const std::string &text)
  */
 inline std::wstring to_upper(const std::wstring &text)
 {
-	std::wstring copy=text;
-	std::transform(copy.begin(),copy.end(),copy.begin(),toupper);
+	std::wstring copy = text;
+	std::transform(copy.begin(), copy.end(), copy.begin(), toupper);
 
 	return copy;
 }
@@ -159,8 +178,8 @@ inline std::wstring to_upper(const std::wstring &text)
  */
 inline std::string to_lower(const std::string &text)
 {
-	std::string copy=text;
-	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);
+	std::string copy = text;
+	std::transform(copy.begin(), copy.end(), copy.begin(), tolower);
 
 	return copy;
 }
@@ -172,8 +191,8 @@ inline std::string to_lower(const std::string &text)
  */
 inline std::wstring to_lower(const std::wstring &text)
 {
-	std::wstring copy=text;
-	std::transform(copy.begin(),copy.end(),copy.begin(),tolower);
+	std::wstring copy = text;
+	std::transform(copy.begin(), copy.end(), copy.begin(), tolower);
 
 	return copy;
 }

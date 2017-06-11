@@ -29,7 +29,7 @@ public:
 	 */
 	OnDestruct(OnDestruct &&rhs) : m_Function(std::move(rhs.m_Function))
 	{
-		rhs.m_ShouldExecute=false;
+		rhs.m_ShouldExecute = false;
 	}
 
 	OnDestruct(const OnDestruct&)=delete;
@@ -40,10 +40,10 @@ public:
 	 */
 	OnDestruct &operator=(OnDestruct &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
-			std::swap(m_Function,rhs.m_Function);
-			rhs.m_ShouldExecute=false;
+			std::swap(m_Function, rhs.m_Function);
+			rhs.m_ShouldExecute = false;
 		}
 
 		return *this;

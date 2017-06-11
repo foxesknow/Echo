@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IFunctionDispatcher.h"
+#include <Echo\IFunctionDispatcher.h>
 
 #include <functional>
 

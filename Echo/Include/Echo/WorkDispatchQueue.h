@@ -1,12 +1,11 @@
 #pragma once
 
-#include "OnDestruct.h"
+#include <Echo\OnDestruct.h>
 
-
-#include "CriticalSection.h"
-#include "Events.h"
-#include "ThreadException.h"
-#include "ThreadPool.h"
+#include <Echo\CriticalSection.h>
+#include <Echo\Events.h>
+#include <Echo\ThreadException.h>
+#include <Echo\ThreadPool.h>
 
 #include <deque>
 
@@ -30,10 +29,10 @@ private:
 	mutable CriticalSection m_SyncRoot;
 	const AutoResetEvent m_StopEvent;
 
-	bool m_ThreadActive=false;
-	bool m_StopProcessing=false;
-	bool m_Shutdown=false;
-	bool m_ProcessRemainingItems=false;
+	bool m_ThreadActive = false;
+	bool m_StopProcessing = false;
+	bool m_Shutdown = false;
+	bool m_ProcessRemainingItems = false;
 
 	/**
 	 * Switches the active queue with the swap deque
@@ -41,15 +40,15 @@ private:
 	 */
 	std::deque<T> &SwitchActive()
 	{
-		auto previous=m_ActiveData;
+		auto previous = m_ActiveData;
 
-		if(m_ActiveData==&m_Data)
+		if(m_ActiveData == &m_Data)
 		{
-			m_ActiveData=&m_SwapData;
+			m_ActiveData = &m_SwapData;
 		}
 		else
 		{
-			m_ActiveData=&m_Data;
+			m_ActiveData = &m_Data;
 		}
 
 		return *previous;
@@ -64,10 +63,10 @@ private:
 
 		m_ActiveData->push_back(data);
 
-		if(m_ThreadActive==false)
+		if(m_ThreadActive == false)
 		{
-			m_ThreadActive=true;
-			auto function=[this]{ProcessQueue();};
+			m_ThreadActive = true;
+			auto function = [this]{ProcessQueue();};
 			m_Dispatcher.Submit(function);
 		}
 	}
@@ -79,9 +78,9 @@ private:
 	{
 		Guard<CriticalSection> lock(m_SyncRoot);
 
-		while(m_ActiveData->size()!=0 && m_StopProcessing==false)
+		while(m_ActiveData->size() != 0 && m_StopProcessing == false)
 		{
-			std::deque<T> &data=SwitchActive();
+			std::deque<T> &data = SwitchActive();
 
 			// We can exit the lock now
 			Unguard<CriticalSection> unlock(m_SyncRoot);
@@ -93,7 +92,7 @@ private:
 		}
 
 		// We're back in the lock here
-		m_ThreadActive=false;
+		m_ThreadActive = false;
 
 		if(m_StopProcessing)
 		{
@@ -126,7 +125,7 @@ protected:
 	 */
 	void ProcessRemainingItems(bool value)
 	{
-		m_ProcessRemainingItems=value;
+		m_ProcessRemainingItems = value;
 	}
 
 	/**
@@ -144,7 +143,7 @@ public:
 	 */
 	WorkDispatchQueue(IFunctionDispatcher &dispatcher) : m_Dispatcher(dispatcher), m_StopEvent(InitialState::NonSignalled)
 	{
-		m_ActiveData=&m_Data;
+		m_ActiveData = &m_Data;
 	}
 
 	/**
@@ -189,18 +188,18 @@ public:
 	 */
 	void Shutdown()
 	{
-		bool shouldWait=false;
+		bool shouldWait = false;
 
 		{
 			Guard<CriticalSection> lock(m_SyncRoot);
 
 			if(m_Shutdown) return;
 
-			m_StopProcessing=true;
-			m_Shutdown=true;
+			m_StopProcessing = true;
+			m_Shutdown = true;
 
 			// We only need to block if the thread is currently running
-			if(m_ThreadActive) shouldWait=true;
+			if(m_ThreadActive) shouldWait = true;
 		}
 
 		if(shouldWait)

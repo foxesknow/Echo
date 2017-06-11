@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
 /**
  * Base class for a handle

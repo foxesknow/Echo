@@ -1,8 +1,8 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Exceptions.h"
-#include "CriticalSection.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Exceptions.h>
+#include <Echo\CriticalSection.h>
 
 #include <chrono>
 
@@ -19,14 +19,14 @@ private:
 
 	bool DoWait(CRITICAL_SECTION *cs, const std::chrono::milliseconds &milliseconds)const
 	{
-		DWORD ms=static_cast<DWORD>(milliseconds.count());
-		BOOL success=::SleepConditionVariableCS(&m_Condition,cs,ms);
+		DWORD ms = static_cast<DWORD>(milliseconds.count());
+		BOOL success = ::SleepConditionVariableCS(&m_Condition, cs, ms);
 
 		if(success) return true;
 
 		// It we fail due to timeout then that's ok
-		DWORD lastError=::GetLastError();
-		if(lastError==ERROR_TIMEOUT) return false;
+		DWORD lastError = ::GetLastError();
+		if(lastError == ERROR_TIMEOUT) return false;
 
 		throw WindowsException(_T("wait on conditional variable failed"));
 	}
@@ -54,9 +54,9 @@ public:
 	 * Waits forever on the condition
 	 * @param cs  the critical section to unlock whilst we wait
 	 */
-	void Wait(const CriticalSection &cs)const
+	void Wait(const CriticalSection &cs) const
 	{
-		DoWait(cs.Underlying(),Infinite);
+		DoWait(cs.Underlying(), Infinite);
 	}
 
 	/**
@@ -65,9 +65,9 @@ public:
 	 * @param milliseconds  how long to wait for
 	 * @returns true if condition was notified within the duration, otherwise false
 	 */
-	bool Wait(const CriticalSection &cs, const std::chrono::milliseconds &milliseconds)const
+	bool Wait(const CriticalSection &cs, const std::chrono::milliseconds &milliseconds) const
 	{
-		return DoWait(cs.Underlying(),milliseconds);
+		return DoWait(cs.Underlying(), milliseconds);
 	}
 
 	/**
@@ -77,10 +77,10 @@ public:
 	 * @returns true if condition was notified within the duration, otherwise false
 	 */
 	template<typename REP, typename PERIOD>
-	bool Wait(const CriticalSection &cs, const std::chrono::duration<REP,PERIOD> &duration)const
+	bool Wait(const CriticalSection &cs, const std::chrono::duration<REP, PERIOD> &duration) const
 	{
-		auto ms=std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		return DoWait(cs.Underlying(),ms);
+		auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+		return DoWait(cs.Underlying(), ms);
 	}
 
 	/**

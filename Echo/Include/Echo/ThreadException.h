@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Exceptions.h"
+#include <Echo\Exceptions.h>
 
 namespace Echo 
 {

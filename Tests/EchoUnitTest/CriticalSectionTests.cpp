@@ -5,11 +5,22 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #include <Echo/CriticalSection.h>
 
+#include <utility>
+
 namespace EchoUnitTest 
 {
 
 TEST_CLASS(CriticalSectionTests)
 {
+private:
+	Echo::UniqueGuard<Echo::CriticalSection> CreateGuard(Echo::CriticalSection &section)
+	{
+		using namespace Echo;
+		
+		UniqueGuard<CriticalSection> guard(section);
+		return guard;
+	}
+
 public:
 	TEST_METHOD(Construct)
 	{
@@ -52,6 +63,14 @@ public:
 		CriticalSection section;
 		Guard<CriticalSection> lock(section);
 		Unguard<CriticalSection> unlock(section);
+	}
+
+	TEST_METHOD(UniqueLocking)
+	{
+		using namespace Echo;
+
+		CriticalSection section;
+		auto uniqueGuard = CreateGuard(section);
 	}
 };
 

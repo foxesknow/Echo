@@ -1,7 +1,9 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Guard.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Guard.h>
+
+#include <utility>
 
 namespace Echo
 {
@@ -86,7 +88,10 @@ public:
 	}
 
 	Guard(const Guard &)=delete;
-	Guard &operator=(Guard &)=delete;
+	Guard(Guard &&)=delete;
+	
+	Guard &operator=(Guard &&)=delete;
+	Guard &operator=(const Guard &)=delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
@@ -101,7 +106,7 @@ public:
 /**
  * Locks a read write lock in shared mode
  */
-class GuardShared
+class ReadWriteLockSharedGuard
 {
 private:
 	ReadWriteLock &m_Lock;
@@ -110,22 +115,68 @@ public:
 	/**
 	 * Exclusively acquires the read write lock
 	 */
-	explicit GuardShared(ReadWriteLock &lock) : m_Lock(lock)
+	explicit ReadWriteLockSharedGuard(ReadWriteLock &lock) : m_Lock(lock)
 	{
 		m_Lock.EnterShared();
 	}
 
-	GuardShared(const GuardShared &)=delete;
-	GuardShared &operator=(GuardShared &)=delete;
+	ReadWriteLockSharedGuard(const ReadWriteLockSharedGuard &)=delete;
+	ReadWriteLockSharedGuard(ReadWriteLockSharedGuard &&)=delete;
+	ReadWriteLockSharedGuard &operator=(const ReadWriteLockSharedGuard &)=delete;
+	ReadWriteLockSharedGuard &operator=(ReadWriteLockSharedGuard &&)=delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
 	 */
-	~GuardShared() noexcept
+	~ReadWriteLockSharedGuard() noexcept
 	{
 		m_Lock.ExitShared();
 	}
 };
 
+template<>
+class UniqueGuard<ReadWriteLock>
+{
+private:
+	ReadWriteLock *m_Lock;
+
+public:
+	/**
+	 * Exclusively acquires the read write lock
+	 */
+	explicit UniqueGuard(ReadWriteLock &lock) : m_Lock(&lock)
+	{
+		m_Lock->Enter();
+	}
+
+	UniqueGuard(UniqueGuard &&rhs) : m_Lock(nullptr)
+	{
+		std::swap(m_Lock, rhs.m_Lock);
+	}
+
+	UniqueGuard(const UniqueGuard &)=delete;
+	
+	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	{
+		if(this != &rhs)
+		{
+			std::swap(m_Lock, rhs.m_Lock);
+		}
+
+		return *this;
+	}
+
+	/**
+	 * Destroys the lock be exitting the critical section
+	 */
+	~UniqueGuard() noexcept
+	{
+		if(m_Lock) m_Lock->Exit();
+	}
+};
+
+// An exclusive lock
+using ReadWriteLockGuard = Guard<ReadWriteLock>;
+using ReadWriteLockUniqueGuard = UniqueGuard<ReadWriteLock>;
 
 } // end of namespace

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Handle.h"
-#include "HandleTraits.h"
-#include "Exceptions.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Handle.h>
+#include <Echo\HandleTraits.h>
+#include <Echo\Exceptions.h>
 
 #include <chrono>
 #include <utility>
@@ -25,13 +25,13 @@ private:
 	 */
 	bool DoWait(const std::chrono::milliseconds &milliseconds) const
 	{
-		DWORD ms=static_cast<DWORD>(milliseconds.count());
-		auto outcome=::WaitForSingleObject(UnderlyingHandle(),ms);
+		DWORD ms = static_cast<DWORD>(milliseconds.count());
+		auto outcome = ::WaitForSingleObject(UnderlyingHandle(),ms);
 
-		if(outcome==WAIT_OBJECT_0) return true;
-		if(outcome==WAIT_TIMEOUT) return false;
+		if(outcome == WAIT_OBJECT_0) return true;
+		if(outcome == WAIT_TIMEOUT) return false;
 
-		if(outcome==WAIT_ABANDONED)
+		if(outcome == WAIT_ABANDONED)
 		{
 			throw WindowsException(_T("handle abandoned"));
 		}
@@ -80,8 +80,8 @@ public:
 	template<typename REP, typename PERIOD>
 	bool Wait(const std::chrono::duration<REP,PERIOD> &duration) const
 	{
-		auto asMilliseconds=std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto ms=static_cast<DWORD>(asMilliseconds.count());
+		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+		auto ms = static_cast<DWORD>(asMilliseconds.count());
 		return DoWait(ms);
 	}
 };
@@ -140,7 +140,7 @@ public:
 	 */
 	virtual ~WaitHandleImpl()override
 	{
-		auto handle=UnderlyingHandle();
+		auto handle = UnderlyingHandle();
 		Traits::Destroy(handle);
 	}
 
@@ -150,7 +150,7 @@ public:
 	 */
 	virtual HANDLE Detach() noexcept override
 	{
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());
 
 		return handle;

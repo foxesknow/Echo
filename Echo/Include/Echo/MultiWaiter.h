@@ -1,8 +1,8 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "WaitHandle.h"
-#include "Exceptions.h"
+#include <Echo\WinInclude.h>
+#include <Echo\WaitHandle.h>
+#include <Echo\Exceptions.h>
 
 #include <vector>
 
@@ -39,7 +39,7 @@ public:
 	 */
 	MultiWaiter &operator=(MultiWaiter &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			m_Handles.swap(rhs.m_Handles);
 			rhs.m_Handles.clear();
@@ -79,23 +79,23 @@ public:
 	template<typename REP, typename PERIOD>
 	bool WaitAll(const std::chrono::duration<REP,PERIOD> &duration) const
 	{
-		auto asMilliseconds=std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 		auto ms=static_cast<DWORD>(asMilliseconds.count());
 
-		const HANDLE *handles=m_Handles.data();
-		auto size=m_Handles.size();
+		const HANDLE *handles = m_Handles.data();
+		auto size = m_Handles.size();
 
-		auto outcome=::WaitForMultipleObjects(size,handles,TRUE,ms);
-		if(outcome>=WAIT_OBJECT_0 && outcome<(WAIT_OBJECT_0+size))
+		auto outcome = ::WaitForMultipleObjects(size,handles,TRUE,ms);
+		if(outcome >= WAIT_OBJECT_0 && outcome < (WAIT_OBJECT_0 + size))
 		{
 			// They were all signalled
 			return true;
 		}
-		else if(outcome>=WAIT_ABANDONED_0 && outcome<(WAIT_ABANDONED_0+size))
+		else if(outcome >= WAIT_ABANDONED_0 && outcome < (WAIT_ABANDONED_0 + size))
 		{
 			throw WindowsException(_T("wait abandoned"));
 		}
-		else if(outcome==WAIT_FAILED)
+		else if(outcome == WAIT_FAILED)
 		{
 			throw WindowsException(_T("failed"));
 		}
@@ -122,23 +122,23 @@ public:
 	template<typename REP, typename PERIOD>
 	int WaitAny(const std::chrono::duration<REP,PERIOD> &duration) const
 	{
-		auto asMilliseconds=std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto ms=static_cast<DWORD>(asMilliseconds.count());
+		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+		auto ms = static_cast<DWORD>(asMilliseconds.count());
 
-		const HANDLE *handles=m_Handles.data();
-		auto size=m_Handles.size();
+		const HANDLE *handles = m_Handles.data();
+		auto size = m_Handles.size();
 
-		auto outcome=::WaitForMultipleObjects(size,handles,FALSE,ms);
-		if(outcome>=WAIT_OBJECT_0 && outcome<(WAIT_OBJECT_0+size))
+		auto outcome = ::WaitForMultipleObjects(size,handles, FALSE, ms);
+		if(outcome >= WAIT_OBJECT_0 && outcome < (WAIT_OBJECT_0 + size))
 		{
 			// One was signalled
 			return static_cast<int>(outcome);
 		}
-		else if(outcome>=WAIT_ABANDONED_0 && outcome<(WAIT_ABANDONED_0+size))
+		else if(outcome >= WAIT_ABANDONED_0 && outcome < (WAIT_ABANDONED_0 + size))
 		{
 			throw WindowsException(_T("wait abandoned"));
 		}
-		else if(outcome==WAIT_FAILED)
+		else if(outcome == WAIT_FAILED)
 		{
 			throw WindowsException(_T("failed"));
 		}

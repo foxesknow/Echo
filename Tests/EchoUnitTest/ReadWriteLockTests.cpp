@@ -31,7 +31,7 @@ public:
 		using namespace Echo;
 
 		ReadWriteLock rwLock;
-		GuardShared lock(rwLock);
+		ReadWriteLockSharedGuard lock(rwLock);
 	}
 };
 

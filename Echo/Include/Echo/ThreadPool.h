@@ -1,9 +1,9 @@
 #pragma once
 
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
-#include "IFunctionDispatcher.h"
-#include "ThreadException.h"
+#include <Echo\IFunctionDispatcher.h>
+#include <Echo\ThreadException.h>
 
 #include <functional>
 #include <utility>
@@ -50,13 +50,13 @@ private:
 
 	static void CALLBACK WorkCallback(PTP_CALLBACK_INSTANCE, void *context, PTP_WORK work)
 	{
-		LONG *counter=nullptr;
+		LONG *counter = nullptr;
 		::CloseThreadpoolWork(work);
 
 		{
 			std::unique_ptr<ThreadData> threadData(reinterpret_cast<ThreadData*>(context));
-			counter=&threadData->Pool()->m_OutstandingWork;
-			auto function=threadData->Function();
+			counter = &threadData->Pool()->m_OutstandingWork;
+			auto function = threadData->Function();
 			function();
 		}
 
@@ -68,7 +68,7 @@ private:
 	 */
 	static void CALLBACK Cleanup(void *context, void*)
 	{
-		ThreadData *threadData=reinterpret_cast<ThreadData*>(context);
+		ThreadData *threadData = reinterpret_cast<ThreadData*>(context);
 		if(threadData)
 		{
 			delete threadData;
@@ -77,7 +77,7 @@ private:
 
 	void EnsureRunning() const
 	{
-		if(m_Pool==nullptr) throw ThreadException(_T("thread pool not started"));
+		if(m_Pool == nullptr) throw ThreadException(_T("thread pool not started"));
 	}
 
 public:
@@ -96,7 +96,7 @@ public:
 	{
 		if(m_Pool!=nullptr) 
 		{
-			::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup,m_CancelOutstanding,nullptr);
+			::CloseThreadpoolCleanupGroupMembers(m_CleanupGroup ,m_CancelOutstanding, nullptr);
 			
 			::CloseThreadpool(m_Pool);
 			::CloseThreadpoolCleanupGroup(m_CleanupGroup);
@@ -109,15 +109,15 @@ public:
 	 */
 	void Start()
 	{
-		if(m_Pool!=nullptr) throw ThreadException(_T("thread pool already started"));
-		m_Pool=::CreateThreadpool(nullptr);
+		if(m_Pool != nullptr) throw ThreadException(_T("thread pool already started"));
+		m_Pool = ::CreateThreadpool(nullptr);
 
 		::InitializeThreadpoolEnvironment(&m_Environment);		
 
-		m_CleanupGroup=::CreateThreadpoolCleanupGroup();
-		::SetThreadpoolCallbackCleanupGroup(&m_Environment,m_CleanupGroup,Cleanup);
+		m_CleanupGroup = ::CreateThreadpoolCleanupGroup();
+		::SetThreadpoolCallbackCleanupGroup(&m_Environment, m_CleanupGroup, Cleanup);
 
-		::SetThreadpoolCallbackPool(&m_Environment,m_Pool);
+		::SetThreadpoolCallbackPool(&m_Environment, m_Pool);
 	}
 
 	/**	
@@ -125,7 +125,7 @@ public:
 	 */
 	LONG OutstandingWork()const noexcept
 	{
-		LONG outstanding=::InterlockedCompareExchange(&m_OutstandingWork,0,0);
+		LONG outstanding = ::InterlockedCompareExchange(&m_OutstandingWork,0,0);
 		return outstanding;
 	}
 
@@ -140,9 +140,9 @@ public:
 	/**
 	 * Indicates if we should cancel any outstanding items when the pool is destroyed
 	 */
-	void CancelOutstanding(bool value) noexcept
+	void CancelOutstanding(bool value)noexcept
 	{
-		m_CancelOutstanding=value;
+		m_CancelOutstanding = value;
 	}
 
 	/**
@@ -151,7 +151,7 @@ public:
 	void MinimumThreads(DWORD value)
 	{
 		EnsureRunning();
-		::SetThreadpoolThreadMinimum(m_Pool,value);
+		::SetThreadpoolThreadMinimum(m_Pool, value);
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public:
 	void MaximumThreads(DWORD value)
 	{
 		EnsureRunning();
-		::SetThreadpoolThreadMaximum(m_Pool,value);
+		::SetThreadpoolThreadMaximum(m_Pool, value);
 	}
 
 	/**
@@ -170,8 +170,8 @@ public:
 	{
 		EnsureRunning();
 
-		auto threadData=new ThreadData(this,std::move(function));
-		auto work=::CreateThreadpoolWork(WorkCallback,threadData,&m_Environment);
+		auto threadData=new ThreadData(this, std::move(function));
+		auto work=::CreateThreadpoolWork(WorkCallback,threadData ,&m_Environment);
 		::InterlockedIncrement(&m_OutstandingWork);
 		::SubmitThreadpoolWork(work);
 	}

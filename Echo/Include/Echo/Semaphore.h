@@ -1,10 +1,10 @@
 #pragma once
 
-#include "WaitHandle.h"
-#include "HandleTraits.h"
+#include <Echo\WaitHandle.h>
+#include <Echo\HandleTraits.h>
 
-#include "Guard.h"
-#include "ThreadException.h"
+#include <Echo\Guard.h>
+#include <Echo\ThreadException.h>
 
 #include <utility>
 
@@ -37,8 +37,8 @@ public:
 	 */
 	Semaphore(LONG initialCount, LONG maximumCount)
 	{
-		auto handle=::CreateSemaphore(nullptr,initialCount,maximumCount,nullptr);
-		if(handle==Traits::InvalidValue()) throw ThreadException(_T("could not create semaphore"));
+		auto handle = ::CreateSemaphore(nullptr, initialCount, maximumCount, nullptr);
+		if(handle == Traits::InvalidValue()) throw ThreadException(_T("could not create semaphore"));
 
 		UnderlyingHandle(handle);
 	}
@@ -58,7 +58,7 @@ public:
 	 */
 	Semaphore &operator=(Semaphore &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			Swap(rhs);
 			rhs.Close();
@@ -76,7 +76,7 @@ public:
 	{
 		LONG previousCount=0;
 		
-		auto success=::ReleaseSemaphore(UnderlyingHandle(),releaseCount,&previousCount);
+		auto success = ::ReleaseSemaphore(UnderlyingHandle(), releaseCount, &previousCount);
 		if(!success) throw ThreadException(_T("could not release semaphore"));
 
 		return previousCount;
@@ -87,7 +87,7 @@ public:
 	 */
 	static Semaphore Attach(HANDLE handle)
 	{
-		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+		if(handle == Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
 
 		return Semaphore(handle);
 	}
@@ -112,7 +112,8 @@ public:
 	}
 
 	Guard(const Guard &)=delete;
-	Guard &operator=(Guard &)=delete;
+	Guard &operator=(const Guard &)=delete;
+	Guard &operator=(Guard &&)=delete;
 
 	/**
 	 * Destroys the instance by releasing the mutex
@@ -123,5 +124,49 @@ public:
 	}
 };
 
+template<>
+class UniqueGuard<Semaphore>
+{
+private:
+	Semaphore *m_Semaphore;
+
+public:
+	/**
+	 * Exclusively acquires the read write lock
+	 */
+	explicit UniqueGuard(Semaphore &mutex) : m_Semaphore(&mutex)
+	{
+		m_Semaphore->Wait();
+	}
+
+	UniqueGuard(UniqueGuard &&rhs) : m_Semaphore(nullptr)
+	{
+		std::swap(m_Semaphore, rhs.m_Semaphore);
+	}
+
+	UniqueGuard(const UniqueGuard &)=delete;
+	
+	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	{
+		if(this != &rhs)
+		{
+			std::swap(m_Semaphore, rhs.m_Semaphore);
+		}
+
+		return *this;
+	}
+
+	/**
+	 * Destroys the lock be exitting the critical section
+	 */
+	~UniqueGuard() noexcept
+	{
+		if(m_Semaphore) m_Semaphore->Release();
+	}
+};
+
+
+using SemaphoreGuard=Guard<Semaphore>;
+using SemaphoreUniqueGuard=UniqueGuard<Semaphore>;
 
 } // end of namespace

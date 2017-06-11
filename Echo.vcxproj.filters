@@ -13,100 +13,106 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{e396ed90-daf2-4fa4-bb32-a4e43d285773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Echo">
+      <UniqueIdentifier>{9d82afcb-2372-4125-a836-39b5fea8736e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Echo\ActionDispatchQueue.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ActionDispatchQueue.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\AsyncResult.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\AsyncResult.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Buffer.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Buffer.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\ConditionalVariable.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ConditionalVariable.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\CriticalSection.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\CriticalSection.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Environment.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Environment.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Events.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Events.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Exceptions.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Exceptions.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\File.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\File.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Handle.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Guard.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\HandleTraits.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Handle.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\IFunctionDispatcher.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\HandleTraits.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\ImmediateWorkItemDispatcher.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\IFunctionDispatcher.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\IOException.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ImmediateWorkItemDispatcher.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\IReaderWriter.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\IOException.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\MemoryMappedFile.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\IReaderWriter.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\MethodCall.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\MemoryMappedFile.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\MultiWaiter.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\MethodCall.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Mutex.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\MultiWaiter.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\OnDestruct.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Mutex.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Overlapped.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\OnDestruct.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Semaphore.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Overlapped.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Thread.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ReadWriteLock.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\ThreadException.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Semaphore.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\ThreadPool.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\Thread.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\tstring.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ThreadException.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\WaitHandle.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\ThreadPool.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\WinInclude.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\tstring.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\WorkDispatchQueue.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\WaitHandle.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\ReadWriteLock.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\WinInclude.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Guard.h">
-      <Filter>Echo</Filter>
+    <ClInclude Include="Echo\Include\Echo\WorkDispatchQueue.h">
+      <Filter>include\Echo</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

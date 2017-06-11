@@ -2,8 +2,8 @@
 
 #include "WinInclude.h"
 
-#include "ThreadPool.h"
-#include "WorkDispatchQueue.h"
+#include <Echo\ThreadPool.h>
+#include <Echo\WorkDispatchQueue.h>
 
 #include <functional>
 
@@ -40,7 +40,7 @@ public:
 	/**
 	 * Destroys the instance
 	 */
-	~ActionDispatchQueue()override
+	~ActionDispatchQueue() override
 	{
 		// NOTE: We call shutdown here so that the correct implementation of ProcessItem is called.
 		// If we leave it to the base constructor to shut down the queue then any remaining items

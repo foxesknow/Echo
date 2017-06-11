@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
 namespace Echo{
 
@@ -14,7 +14,7 @@ public:
 
 	static void Destroy(HANDLE handle)
 	{
-		if(handle!=InvalidValue())
+		if(handle != InvalidValue())
 		{
 			::CloseHandle(handle);
 		}
@@ -31,7 +31,7 @@ public:
 
 	static void Destroy(HANDLE handle)
 	{
-		if(handle!=InvalidValue())
+		if(handle != InvalidValue())
 		{
 			::CloseHandle(handle);
 		}

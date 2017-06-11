@@ -2,14 +2,14 @@
 
 #include <utility>
 
-#include "HandleTraits.h"
-#include "WinInclude.h"
-#include "Handle.h"
-#include "Exceptions.h"
+#include <Echo\HandleTraits.h>
+#include <Echo\WinInclude.h>
+#include <Echo\Handle.h>
+#include <Echo\Exceptions.h>
 
-#include "AsyncResult.h"
-#include "IOException.h"
-#include "IReaderWriter.h"
+#include <Echo\AsyncResult.h>
+#include <Echo\IOException.h>
+#include <Echo\IReaderWriter.h>
 
 namespace Echo 
 {
@@ -58,7 +58,7 @@ public:
 	 */
 	~File()noexcept override
 	{
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		Traits::Destroy(handle);
 	}
 
@@ -71,7 +71,7 @@ public:
 	 */
 	File &operator==(File &&rhs) noexcept
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			Swap(rhs);
 			rhs.Close();
@@ -85,14 +85,14 @@ public:
 	 */
 	virtual void Close()noexcept override
 	{
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		Traits::Destroy(handle);
 		UnderlyingHandle(Traits::InvalidValue());
 	}
 
 	void Flush() const
 	{
-		auto success=::FlushFileBuffers(UnderlyingHandle());
+		auto success = ::FlushFileBuffers(UnderlyingHandle());
 		if(!success) throw IOException(_T("Flush failed"));
 	}
 
@@ -105,7 +105,7 @@ public:
 		CheckHandle();
 
 		LARGE_INTEGER size;
-		BOOL success=::GetFileSizeEx(UnderlyingHandle(),&size);
+		BOOL success = ::GetFileSizeEx(UnderlyingHandle(), &size);
 
 		if(!success) throw IOException(_T("Size failed"));
 		return size.QuadPart;
@@ -119,13 +119,13 @@ public:
 	 */
 	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) const override
 	{
-		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
+		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
 
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		
-		DWORD bytesWritten=0;
-		auto success=::WriteFile(handle,buffer,bytesToWrite,&bytesWritten,nullptr);
+		DWORD bytesWritten = 0;
+		auto success = ::WriteFile(handle, buffer, bytesToWrite, &bytesWritten, nullptr);
 
 		// We're synchronous, so we don't need to check for pending IO;
 		if(!success) throw IOException(_T("Write failed"));
@@ -142,13 +142,13 @@ public:
 	 */
 	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) const override
 	{
-		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
+		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
 
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		
-		DWORD bytesWritten=0;
-		auto success=::WriteFile(handle,buffer,bytesToWrite,&bytesWritten,&overlapped);
+		DWORD bytesWritten = 0;
+		auto success = ::WriteFile(handle, buffer, bytesToWrite, &bytesWritten, &overlapped);
 
 		if(success)
 		{
@@ -156,7 +156,7 @@ public:
 		}
 		else
 		{
-			if(GetLastError()==ERROR_IO_PENDING) 
+			if(GetLastError() == ERROR_IO_PENDING) 
 			{
 				return AsyncResult::Pending;
 			}
@@ -175,13 +175,13 @@ public:
 	 */
 	virtual DWORD Read(void *buffer, DWORD bytesToRead) const override
 	{
-		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
+		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
 
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 
-		DWORD bytesRead=0;
-		auto success=::ReadFile(handle,buffer,bytesToRead,&bytesRead,nullptr);
+		DWORD bytesRead = 0;
+		auto success = ::ReadFile(handle, buffer, bytesToRead, &bytesRead, nullptr);
 
 		// We're synchronous, so we don't need to check for pending IO;
 		if(!success) throw IOException(_T("Write failed"));
@@ -198,13 +198,13 @@ public:
 	 */
 	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) const override
 	{
-		if(buffer==nullptr) throw ArgumentNullException(_T("buffer"));
+		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
 
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 
-		DWORD bytesRead=0;
-		auto success=::ReadFile(handle,buffer,bytesToRead,&bytesRead,&overlapped);
+		DWORD bytesRead = 0;
+		auto success = ::ReadFile(handle, buffer, bytesToRead, &bytesRead, &overlapped);
 
 		if(success)
 		{
@@ -212,7 +212,7 @@ public:
 		}
 		else
 		{
-			if(GetLastError()==ERROR_IO_PENDING) 
+			if(GetLastError() == ERROR_IO_PENDING) 
 			{
 				return AsyncResult::Pending;
 			}
@@ -232,9 +232,9 @@ public:
 	{
 		CheckHandle();
 
-		DWORD bytesTransferred=0;
-		HANDLE handle=UnderlyingHandle();
-		auto success=::GetOverlappedResult(handle,&overlapped,&bytesTransferred,TRUE);
+		DWORD bytesTransferred = 0;
+		HANDLE handle = UnderlyingHandle();
+		auto success = ::GetOverlappedResult(handle, &overlapped, &bytesTransferred, TRUE);
 
 		if(!success) throw IOException(_T("WaitForAsyncToComplete failed"));
 
@@ -247,7 +247,7 @@ public:
 	 */
 	virtual HANDLE Detach()noexcept override
 	{
-		HANDLE handle=UnderlyingHandle();
+		HANDLE handle = UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());
 
 		return handle;
@@ -258,7 +258,7 @@ public:
 	 */
 	static File Create(const tstd::tstring &filename, DWORD access)
 	{
-		return Open(filename,access,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL);
+		return Open(filename, access, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL);
 	}
 
 	/**
@@ -266,7 +266,7 @@ public:
 	 */
 	static File CreateAsync(const tstd::tstring &filename, DWORD access)
 	{
-		return Open(filename,access,0,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
+		return Open(filename, access, 0, CREATE_ALWAYS ,FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED);
 	}
 
 	/**
@@ -274,7 +274,7 @@ public:
 	 */
 	static File OpenRead(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
+		return Open(filename, GENERIC_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL);
 	}
 
 	/**
@@ -282,7 +282,7 @@ public:
 	 */
 	static File OpenReadAsync(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
+		return Open(filename, GENERIC_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED);
 	}
 
 	/**
@@ -290,7 +290,7 @@ public:
 	 */
 	static File OpenWrite(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
+		return Open(filename, GENERIC_WRITE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL);
 	}
 
 	/**
@@ -298,7 +298,7 @@ public:
 	 */
 	static File OpenWriteAsync(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_WRITE,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_OVERLAPPED);
+		return Open(filename, GENERIC_WRITE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED);
 	}
 
 	/**
@@ -306,7 +306,7 @@ public:
 	 */
 	static File OpenReadWrite(const tstd::tstring &filename)
 	{
-		return Open(filename,GENERIC_WRITE|GENERIC_READ,0,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL);
+		return Open(filename, GENERIC_WRITE | GENERIC_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL);
 	}
 
 	/**
@@ -322,16 +322,16 @@ public:
 	 */
 	static File Open(const tstd::tstring &filename, DWORD access, DWORD shareMode, DWORD disposition, DWORD attributes)
 	{
-		HANDLE handle=::CreateFile(filename.c_str(),access,shareMode,nullptr,disposition,attributes,nullptr);
+		HANDLE handle = ::CreateFile(filename.c_str(), access, shareMode, nullptr, disposition, attributes, nullptr);
 		
-		if(handle==Traits::InvalidValue()) throw IOException(_T("unable to open file"));
+		if(handle == Traits::InvalidValue()) throw IOException(_T("unable to open file"));
 
 		return File(handle);
 	}
 
 	static File Attach(HANDLE handle)
 	{
-		if(handle==Traits::InvalidValue()) throw IOException(_T("invalid file handle"));
+		if(handle == Traits::InvalidValue()) throw IOException(_T("invalid file handle"));
 
 		return File(handle);
 	}

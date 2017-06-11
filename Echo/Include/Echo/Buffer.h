@@ -2,7 +2,7 @@
 
 #include <utility>
 #include <cstdint>
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
 namespace Echo
 {
@@ -23,8 +23,8 @@ public:
 	 */
 	explicit Buffer(size_t size)
 	{
-		m_Data=new std::uint8_t[size];
-		m_Size=size;
+		m_Data = new std::uint8_t[size];
+		m_Size = size;
 	}
 
 	/**
@@ -32,8 +32,8 @@ public:
 	 */
 	Buffer(Buffer &&rhs) : m_Data(nullptr), m_Size(0)
 	{
-		std::swap(m_Data,rhs.m_Data);
-		std::swap(m_Size,rhs.m_Size);
+		std::swap(m_Data, rhs.m_Data);
+		std::swap(m_Size, rhs.m_Size);
 	}
 
 	Buffer(const Buffer &&)=delete;	
@@ -45,15 +45,15 @@ public:
 	 */
 	Buffer &operator=(Buffer &&rhs) noexcept
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			delete []m_Data;
 
-			m_Data=nullptr;
-			m_Size=0;
+			m_Data = nullptr;
+			m_Size = 0;
 
-			std::swap(m_Data,rhs.m_Data);
-			std::swap(m_Size,rhs.m_Size);
+			std::swap(m_Data, rhs.m_Data);
+			std::swap(m_Size, rhs.m_Size);
 		}
 
 		return *this;
@@ -72,7 +72,7 @@ public:
 	 */
 	void Fill(int value)
 	{
-		::memset(m_Data,value,m_Size);
+		::memset(m_Data, value, m_Size);
 	}
 
 	/**

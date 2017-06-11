@@ -1,8 +1,8 @@
 #pragma once
 
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
-#include "AsyncResult.h"
+#include <Echo\AsyncResult.h>
 
 namespace Echo 
 {

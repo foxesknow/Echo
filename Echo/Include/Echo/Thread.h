@@ -1,10 +1,10 @@
 #pragma once
 
-#include "WaitHandle.h"
-#include "HandleTraits.h"
-#include "Exceptions.h"
+#include <Echo\WaitHandle.h>
+#include <Echo\HandleTraits.h>
+#include <Echo\Exceptions.h>
 
-#include "ThreadException.h"
+#include <Echo\ThreadException.h>
 
 #include <functional>
 #include <process.h>
@@ -24,8 +24,8 @@ private:
 
 	static unsigned __stdcall ThreadMain(void *data)
 	{
-		auto thread=static_cast<Thread*>(data);
-		auto function=thread->m_ThreadFunction;
+		auto thread = static_cast<Thread*>(data);
+		auto function = thread->m_ThreadFunction;
 		function();
 		return 0;
 	}
@@ -58,9 +58,9 @@ public:
 	 */
 	Thread &operator=(Thread &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
-			std::swap(m_ThreadFunction,rhs.m_ThreadFunction);
+			std::swap(m_ThreadFunction, rhs.m_ThreadFunction);
 			Swap(rhs);
 			rhs.Close();
 		}
@@ -73,9 +73,9 @@ public:
 	 */
 	void Start()
 	{
-		if(UnderlyingHandle()!=Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
+		if(UnderlyingHandle() != Traits::InvalidValue()) throw ThreadException(_T("thread already started"));
 
-		auto handle=::_beginthreadex(nullptr,0,ThreadMain,this,0,nullptr);
+		auto handle = ::_beginthreadex(nullptr, 0, ThreadMain, this, 0, nullptr);
 		UnderlyingHandle(reinterpret_cast<HANDLE>(handle));
 	}
 
@@ -84,10 +84,10 @@ public:
 	 */
 	void Suspend()const
 	{
-		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
+		if(UnderlyingHandle() == Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
-		DWORD success=::SuspendThread(UnderlyingHandle());
-		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("Suspend failed"));
+		DWORD success = ::SuspendThread(UnderlyingHandle());
+		if(success == static_cast<DWORD>(-1)) throw ThreadException(_T("Suspend failed"));
 	}
 
 	/**
@@ -95,10 +95,10 @@ public:
 	 */
 	void Resume()const
 	{
-		if(UnderlyingHandle()==Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
+		if(UnderlyingHandle() == Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
-		DWORD success=::ResumeThread(UnderlyingHandle());
-		if(success==static_cast<DWORD>(-1)) throw ThreadException(_T("Resume failed"));
+		DWORD success = ::ResumeThread(UnderlyingHandle());
+		if(success == static_cast<DWORD>(-1)) throw ThreadException(_T("Resume failed"));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public:
 	 */
 	bool Started()const
 	{
-		return UnderlyingHandle()!=Traits::InvalidValue();
+		return UnderlyingHandle() != Traits::InvalidValue();
 	}
 };
 

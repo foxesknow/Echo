@@ -1,10 +1,9 @@
 #pragma once
 
-#include "tstring.h"
-#include "WaitHandle.h"
-#include "HandleTraits.h"
-
-#include "ThreadException.h"
+#include <Echo\tstring.h>
+#include <Echo\WaitHandle.h>
+#include <Echo\HandleTraits.h>
+#include <Echo\ThreadException.h>
 
 #include <utility>
 
@@ -37,10 +36,10 @@ protected:
 	 */
 	Event(bool isManual, InitialState initialState, const TCHAR *name)
 	{
-		BOOL signalled=(initialState==InitialState::Signalled ? TRUE : FALSE);
-		auto handle=::CreateEvent(nullptr,isManual,signalled,name);
+		BOOL signalled = (initialState == InitialState::Signalled ? TRUE : FALSE);
+		auto handle = ::CreateEvent(nullptr, isManual, signalled, name);
 
-		if(handle==Traits::InvalidValue())
+		if(handle == Traits::InvalidValue())
 		{
 			throw ThreadException(_T("could not create event"));
 		}
@@ -82,7 +81,7 @@ public:
 
 	static Event Attach(HANDLE handle)
 	{
-		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+		if(handle == Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
 
 		return Event(handle);
 	}
@@ -110,7 +109,7 @@ public:
 	 * Initializes the instance
 	 * @param initialState  the initial state of the event
 	 */
-	explicit ManualResetEvent(InitialState initialState) : Event(true,initialState,nullptr)
+	explicit ManualResetEvent(InitialState initialState) : Event(true, initialState, nullptr)
 	{
 	}
 
@@ -119,7 +118,7 @@ public:
 	 * @param initialState  the initial state of the event
 	 * @param name  an optional name for the event
 	 */
-	ManualResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true,initialState,name.c_str())
+	ManualResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true, initialState, name.c_str())
 	{
 	}
 
@@ -137,7 +136,7 @@ public:
 	 */
 	ManualResetEvent &operator=(ManualResetEvent &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			Swap(rhs);
 			rhs.Close();
@@ -151,7 +150,7 @@ public:
 	 */
 	static ManualResetEvent Attach(HANDLE handle)
 	{
-		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+		if(handle == Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
 
 		return ManualResetEvent(handle);
 	}
@@ -179,7 +178,7 @@ public:
 	 * Initializes the instance
 	 * @param initialState  the initial state of the event
 	 */
-	explicit AutoResetEvent(InitialState initialState) : Event(false,initialState,nullptr)
+	explicit AutoResetEvent(InitialState initialState) : Event(false, initialState, nullptr)
 	{
 	}
 
@@ -188,7 +187,7 @@ public:
 	 * @param initialState  the initial state of the event
 	 * @param name  an optional name for the event
 	 */
-	AutoResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true,initialState,name.c_str())
+	AutoResetEvent(InitialState initialState, const tstd::tstring &name) : Event(true, initialState, name.c_str())
 	{
 	}
 
@@ -206,7 +205,7 @@ public:
 	 */
 	AutoResetEvent &operator=(AutoResetEvent &&rhs)
 	{
-		if(this!=&rhs)
+		if(this != &rhs)
 		{
 			Swap(rhs);
 			rhs.Close();
@@ -220,7 +219,7 @@ public:
 	 */
 	static AutoResetEvent Attach(HANDLE handle)
 	{
-		if(handle==Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
+		if(handle == Traits::InvalidValue()) throw ThreadException(_T("invalid handle"));
 
 		return AutoResetEvent(handle);
 	}

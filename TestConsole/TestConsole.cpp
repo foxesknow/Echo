@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include <Echo/ReadWriteLock.h>
+#include <Echo\ReadWriteLock.h>
 
 Echo::ReadWriteLock readWrite;
 

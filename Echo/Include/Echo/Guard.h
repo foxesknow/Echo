@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WinInclude.h"
+#include <Echo\WinInclude.h>
 
 namespace Echo 
 {
@@ -17,6 +17,11 @@ class Unguard
 
 template<typename T>
 class TryGuard
+{
+};
+
+template<typename T>
+class UniqueGuard
 {
 };
 

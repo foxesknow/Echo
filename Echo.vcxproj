@@ -11,37 +11,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Echo\ActionDispatchQueue.h" />
-    <ClInclude Include="Echo\AsyncResult.h" />
-    <ClInclude Include="Echo\Buffer.h" />
-    <ClInclude Include="Echo\ConditionalVariable.h" />
-    <ClInclude Include="Echo\CriticalSection.h" />
-    <ClInclude Include="Echo\Environment.h" />
-    <ClInclude Include="Echo\Events.h" />
-    <ClInclude Include="Echo\Exceptions.h" />
-    <ClInclude Include="Echo\File.h" />
-    <ClInclude Include="Echo\Handle.h" />
-    <ClInclude Include="Echo\HandleTraits.h" />
-    <ClInclude Include="Echo\IFunctionDispatcher.h" />
-    <ClInclude Include="Echo\ImmediateWorkItemDispatcher.h" />
-    <ClInclude Include="Echo\IOException.h" />
-    <ClInclude Include="Echo\IReaderWriter.h" />
-    <ClInclude Include="Echo\Guard.h" />
-    <ClInclude Include="Echo\MemoryMappedFile.h" />
-    <ClInclude Include="Echo\MethodCall.h" />
-    <ClInclude Include="Echo\MultiWaiter.h" />
-    <ClInclude Include="Echo\Mutex.h" />
-    <ClInclude Include="Echo\OnDestruct.h" />
-    <ClInclude Include="Echo\Overlapped.h" />
-    <ClInclude Include="Echo\ReadWriteLock.h" />
-    <ClInclude Include="Echo\Semaphore.h" />
-    <ClInclude Include="Echo\Thread.h" />
-    <ClInclude Include="Echo\ThreadException.h" />
-    <ClInclude Include="Echo\ThreadPool.h" />
-    <ClInclude Include="Echo\tstring.h" />
-    <ClInclude Include="Echo\WaitHandle.h" />
-    <ClInclude Include="Echo\WinInclude.h" />
-    <ClInclude Include="Echo\WorkDispatchQueue.h" />
+    <ClInclude Include="Echo\Include\Echo\ActionDispatchQueue.h" />
+    <ClInclude Include="Echo\Include\Echo\AsyncResult.h" />
+    <ClInclude Include="Echo\Include\Echo\Buffer.h" />
+    <ClInclude Include="Echo\Include\Echo\ConditionalVariable.h" />
+    <ClInclude Include="Echo\Include\Echo\CriticalSection.h" />
+    <ClInclude Include="Echo\Include\Echo\Environment.h" />
+    <ClInclude Include="Echo\Include\Echo\Events.h" />
+    <ClInclude Include="Echo\Include\Echo\Exceptions.h" />
+    <ClInclude Include="Echo\Include\Echo\File.h" />
+    <ClInclude Include="Echo\Include\Echo\Guard.h" />
+    <ClInclude Include="Echo\Include\Echo\Handle.h" />
+    <ClInclude Include="Echo\Include\Echo\HandleTraits.h" />
+    <ClInclude Include="Echo\Include\Echo\IFunctionDispatcher.h" />
+    <ClInclude Include="Echo\Include\Echo\ImmediateWorkItemDispatcher.h" />
+    <ClInclude Include="Echo\Include\Echo\IOException.h" />
+    <ClInclude Include="Echo\Include\Echo\IReaderWriter.h" />
+    <ClInclude Include="Echo\Include\Echo\MemoryMappedFile.h" />
+    <ClInclude Include="Echo\Include\Echo\MethodCall.h" />
+    <ClInclude Include="Echo\Include\Echo\MultiWaiter.h" />
+    <ClInclude Include="Echo\Include\Echo\Mutex.h" />
+    <ClInclude Include="Echo\Include\Echo\OnDestruct.h" />
+    <ClInclude Include="Echo\Include\Echo\Overlapped.h" />
+    <ClInclude Include="Echo\Include\Echo\ReadWriteLock.h" />
+    <ClInclude Include="Echo\Include\Echo\Semaphore.h" />
+    <ClInclude Include="Echo\Include\Echo\Thread.h" />
+    <ClInclude Include="Echo\Include\Echo\ThreadException.h" />
+    <ClInclude Include="Echo\Include\Echo\ThreadPool.h" />
+    <ClInclude Include="Echo\Include\Echo\tstring.h" />
+    <ClInclude Include="Echo\Include\Echo\WaitHandle.h" />
+    <ClInclude Include="Echo\Include\Echo\WinInclude.h" />
+    <ClInclude Include="Echo\Include\Echo\WorkDispatchQueue.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9564A203-8EFA-440C-8847-7A6CC3F0598E}</ProjectGuid>
@@ -76,9 +76,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
+    <IncludePath>$(ProjectDir)\Echo\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)\Echo\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

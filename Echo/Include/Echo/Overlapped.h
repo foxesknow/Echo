@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Events.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Events.h>
 
 namespace Echo 
 {
@@ -17,8 +17,8 @@ public:
 	 */
 	Overlapped()
 	{
-		OVERLAPPED *overlapped=this;
-		::ZeroMemory(overlapped,sizeof(OVERLAPPED));
+		OVERLAPPED *overlapped = this;
+		::ZeroMemory(overlapped, sizeof(OVERLAPPED));
 	}
 
 	/**
@@ -26,7 +26,7 @@ public:
 	 */
 	void Attach(const Echo::Event &event)
 	{
-		hEvent=event.UnderlyingHandle();
+		hEvent = event.UnderlyingHandle();
 	}
 
 	/**
@@ -34,11 +34,11 @@ public:
 	 */
 	void Position(DWORD64 position)
 	{
-		DWORD low=static_cast<DWORD>(position);
-		DWORD high=static_cast<DWORD>(position>>32);
+		DWORD low = static_cast<DWORD>(position);
+		DWORD high = static_cast<DWORD>(position>>32);
 
-		Offset=low;
-		OffsetHigh=high;
+		Offset = low;
+		OffsetHigh = high;
 	}
 };
 

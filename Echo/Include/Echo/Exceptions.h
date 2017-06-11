@@ -1,8 +1,8 @@
 #pragma once
 
-#include "WinInclude.h"
-#include "Exceptions.h"
-#include "tstring.h"
+#include <Echo\WinInclude.h>
+#include <Echo\Exceptions.h>
+#include <Echo\tstring.h>
 
 namespace Echo{
 
@@ -76,7 +76,7 @@ public:
 	 */
 	WindowsException()
 	{
-		m_ErrorCode=::GetLastError();
+		m_ErrorCode = ::GetLastError();
 	}
 
 	/**
@@ -84,7 +84,7 @@ public:
 	 */
 	WindowsException(const tstd::tstring &message) : Exception(message)
 	{
-		m_ErrorCode=::GetLastError();
+		m_ErrorCode = ::GetLastError();
 	}
 
 	/**
@@ -108,12 +108,16 @@ public:
 	 */
 	const tstd::tstring &ErrorCodeAsString() const
 	{
-		if(m_ErrorCode==0 || m_ErrorCodeAsString.length()!=0) return m_ErrorCodeAsString;
+		if(m_ErrorCode == 0 || m_ErrorCodeAsString.length() != 0) return m_ErrorCodeAsString;
 
 		LPTSTR buffer=nullptr;
 		DWORD bufferLength=::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_IGNORE_INSERTS,
-							nullptr,m_ErrorCode,MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),
-							(LPTSTR)&buffer,0,nullptr);
+											nullptr,
+											m_ErrorCode,
+											MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),
+											(LPTSTR)&buffer,
+											0,
+											nullptr);
 		if(bufferLength)
 		{
 			LPCSTR lpMsgStr = (LPCSTR)buffer;
