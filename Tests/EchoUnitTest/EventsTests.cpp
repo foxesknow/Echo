@@ -6,7 +6,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include <Echo/Events.h>
+#include <Echo\Events.h>
 
 namespace EchoUnitTest 
 {

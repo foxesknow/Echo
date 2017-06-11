@@ -92,6 +92,7 @@
     <ClCompile Include="ConditionalVariableTests.cpp" />
     <ClCompile Include="CriticalSectionTests.cpp" />
     <ClCompile Include="EventsTests.cpp" />
+    <ClCompile Include="ExceptionTests.cpp" />
     <ClCompile Include="FileTests.cpp" />
     <ClCompile Include="MemoryMappedFileTests.cpp" />
     <ClCompile Include="MethodCallTests.cpp" />

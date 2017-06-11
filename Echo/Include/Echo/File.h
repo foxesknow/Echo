@@ -8,7 +8,6 @@
 #include <Echo\Exceptions.h>
 
 #include <Echo\AsyncResult.h>
-#include <Echo\IOException.h>
 #include <Echo\IReaderWriter.h>
 
 namespace Echo 
@@ -21,7 +20,7 @@ public:
 
 private:
 
-	void CheckHandle()const
+	void CheckHandle() const
 	{
 		if(UnderlyingHandle()==Traits::InvalidValue())
 		{
@@ -51,18 +50,18 @@ public:
 	{
 	}
 
-	File(const File &rhs)=delete;
+	File(const File &rhs) = delete;
 
 	/**
 	 * Closes the file, if open
 	 */
-	~File()noexcept override
+	~File() noexcept override
 	{
 		HANDLE handle = UnderlyingHandle();
 		Traits::Destroy(handle);
 	}
 
-	File &operator=(const File &rhs)=delete;
+	File &operator=(const File &rhs) = delete;
 
 	/**
 	 * Moves the file on the right into this object.
@@ -83,7 +82,7 @@ public:
 	/**
 	 * Closes the file, if open
 	 */
-	virtual void Close()noexcept override
+	virtual void Close() noexcept override
 	{
 		HANDLE handle = UnderlyingHandle();
 		Traits::Destroy(handle);
@@ -117,7 +116,7 @@ public:
 	 * @param bytesToWrite  how much data to write
 	 * @returns the number of bytes written to the file
 	 */
-	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) const override
+	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) override
 	{
 		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -140,7 +139,7 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the write completed immediately, Pending if the write is pending completion
 	 */
-	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) const override
+	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) override
 	{
 		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -173,7 +172,7 @@ public:
 	 * @param bytesToRead  how much data to read
 	 * @returns the number of bytes read from the file
 	 */
-	virtual DWORD Read(void *buffer, DWORD bytesToRead) const override
+	virtual DWORD Read(void *buffer, DWORD bytesToRead) override
 	{
 		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -196,7 +195,7 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the read completed immediately, Pending if the read is pending completion
 	 */
-	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) const override
+	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) override
 	{
 		if(buffer == nullptr) throw ArgumentNullException(_T("buffer"));
 		CheckHandle();
@@ -228,7 +227,7 @@ public:
 	 * @param overlapped  the overlapped structure that was passed to the async operation
 	 * @returns the number of bytes transferred by the async operation
 	 */
-	virtual DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) const override
+	virtual DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) override
 	{
 		CheckHandle();
 
@@ -245,7 +244,7 @@ public:
 	 * Sets the handle to an invalid value and returns the OS value
 	 * @returns the OS handle
 	 */
-	virtual HANDLE Detach()noexcept override
+	virtual HANDLE Detach() noexcept override
 	{
 		HANDLE handle = UnderlyingHandle();
 		UnderlyingHandle(Traits::InvalidValue());

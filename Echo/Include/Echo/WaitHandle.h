@@ -48,16 +48,16 @@ protected:
 	{
 	}
 
-	WaitHandle(WaitHandle &&rhs)=delete;
-	WaitHandle(const WaitHandle &)=delete;
-	WaitHandle &operator=(const WaitHandle &)=delete;
+	WaitHandle(WaitHandle &&rhs) = delete;
+	WaitHandle(const WaitHandle &) = delete;
+	WaitHandle &operator=(const WaitHandle &) = delete;
 
 public:
 
 	/**
 	 * Waits forever for a handle to be signalled
 	 */
-	void Wait()const
+	void Wait() const
 	{
 		DoWait(Infinite);
 	}
@@ -109,8 +109,8 @@ protected:
 		Swap(rhs);
 	}
 
-	WaitHandleImpl(const WaitHandleImpl &)=delete;
-	WaitHandleImpl operator=(const WaitHandleImpl &)=delete;	
+	WaitHandleImpl(const WaitHandleImpl &) = delete;
+	WaitHandleImpl operator=(const WaitHandleImpl &) = delete;	
 
 	/**
 	 * Closes the handle, if open

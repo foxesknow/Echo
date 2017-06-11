@@ -25,7 +25,7 @@ public:
 		::InitializeCriticalSection(&m_Section);
 	}
 
-	CriticalSection(const CriticalSection &)=delete;
+	CriticalSection(const CriticalSection &) = delete;
 
 	/**
 	 * Destroys the instance
@@ -35,13 +35,13 @@ public:
 		::DeleteCriticalSection(&m_Section);
 	}
 
-	CriticalSection &operator=(const CriticalSection &)=delete;
-	CriticalSection &operator=(CriticalSection &&)=delete;
+	CriticalSection &operator=(const CriticalSection &) = delete;
+	CriticalSection &operator=(CriticalSection &&) = delete;
 
 	/**
 	 * Enters the critical section
 	 */
-	void Enter()noexcept
+	void Enter() noexcept
 	{
 		::EnterCriticalSection(&m_Section);
 	}
@@ -50,7 +50,7 @@ public:
 	 * Attempts to enter the critical section
 	 * @returns true if the critical section was entered, otherwise false
 	 */
-	bool TryEnter()noexcept
+	bool TryEnter() noexcept
 	{
 		return ::TryEnterCriticalSection(&m_Section)!=FALSE;
 	}
@@ -58,7 +58,7 @@ public:
 	/**
 	 * Exits the critical section
 	 */
-	void Exit()noexcept
+	void Exit() noexcept
 	{
 		::LeaveCriticalSection(&m_Section);
 	}
@@ -66,7 +66,7 @@ public:
 	/**
 	 * Returns the underlying critical section
 	 */
-	CRITICAL_SECTION *Underlying()noexcept
+	CRITICAL_SECTION *Underlying() noexcept
 	{
 		return &m_Section;
 	}
@@ -90,9 +90,9 @@ public:
 		m_Section.Enter();
 	}
 
-	Guard(const Guard &)=delete;
-	Guard &operator=(const Guard &)=delete;
-	Guard &operator=(Guard &&)=delete;
+	Guard(const Guard &) = delete;
+	Guard &operator=(const Guard &) = delete;
+	Guard &operator=(Guard &&) = delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
@@ -122,9 +122,9 @@ public:
 		m_Section.Exit();
 	}
 
-	Unguard(const Unguard &)=delete;
-	Unguard &operator=(const Unguard &)=delete;
-	Unguard &operator=(Unguard &&)=delete;
+	Unguard(const Unguard &) = delete;
+	Unguard &operator=(const Unguard &) = delete;
+	Unguard &operator=(Unguard &&) = delete;
 
 	/**
 	 * Destroys the instance by entering the critical section
@@ -150,9 +150,9 @@ public:
 	{
 	}
 
-	TryGuard(const TryGuard &)=delete;
-	TryGuard &operator=(const TryGuard &)=delete;
-	TryGuard &operator=(TryGuard &&)=delete;
+	TryGuard(const TryGuard &) = delete;
+	TryGuard &operator=(const TryGuard &) = delete;
+	TryGuard &operator=(TryGuard &&) = delete;
 
 	/**
 	 * Inidicates if the critical section was locked
@@ -194,9 +194,9 @@ public:
 		std::swap(m_Section, rhs.m_Section);
 	}
 
-	UniqueGuard(const UniqueGuard &)=delete;
+	UniqueGuard(const UniqueGuard &) = delete;
 	
-	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	UniqueGuard &operator=(UniqueGuard &&rhs) noexcept
 	{
 		if(this != &rhs)
 		{

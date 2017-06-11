@@ -3,7 +3,7 @@
 #include <Echo\tstring.h>
 #include <Echo\WaitHandle.h>
 #include <Echo\HandleTraits.h>
-#include <Echo\ThreadException.h>
+#include <Echo\Exceptions.h>
 
 #include <utility>
 
@@ -66,7 +66,7 @@ public:
 	/**
 	 * Sets the event
 	 */
-	void Set()const
+	void Set() const
 	{
 		::SetEvent(UnderlyingHandle());
 	}
@@ -74,7 +74,7 @@ public:
 	/**
 	 * Resets the event
 	 */
-	void Reset()const
+	void Reset() const
 	{
 		::ResetEvent(UnderlyingHandle());
 	}
@@ -129,7 +129,7 @@ public:
 	{
 	}
 
-	ManualResetEvent(const ManualResetEvent&)=delete;
+	ManualResetEvent(const ManualResetEvent&) = delete;
 
 	/**
 	 * Moves an event into the instance
@@ -198,7 +198,7 @@ public:
 	{
 	}
 	
-	AutoResetEvent(const AutoResetEvent&)=delete;
+	AutoResetEvent(const AutoResetEvent&) = delete;
 
 	/**
 	 * Moves an event into the instance

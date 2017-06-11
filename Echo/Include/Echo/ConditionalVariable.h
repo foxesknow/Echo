@@ -19,7 +19,7 @@ class ConditionalVariable
 private:
 	mutable CONDITION_VARIABLE m_Condition;
 
-	bool DoWaitCS(CRITICAL_SECTION *cs, const std::chrono::milliseconds &milliseconds)const
+	bool DoWaitCS(CRITICAL_SECTION *cs, const std::chrono::milliseconds &milliseconds) const
 	{
 		DWORD ms = static_cast<DWORD>(milliseconds.count());
 		BOOL success = ::SleepConditionVariableCS(&m_Condition, cs, ms);
@@ -33,7 +33,7 @@ private:
 		throw WindowsException(_T("wait on conditional variable failed"));
 	}
 
-	bool DoWaitRW(SRWLOCK *rwLock, const std::chrono::milliseconds &milliseconds, ULONG flags)const
+	bool DoWaitRW(SRWLOCK *rwLock, const std::chrono::milliseconds &milliseconds, ULONG flags) const
 	{
 		DWORD ms = static_cast<DWORD>(milliseconds.count());
 		BOOL success = ::SleepConditionVariableSRW(&m_Condition, rwLock, ms, flags);
@@ -56,11 +56,11 @@ public:
 		::InitializeConditionVariable(&m_Condition);
 	}
 
-	ConditionalVariable(const ConditionalVariable&)=delete;
-	ConditionalVariable(ConditionalVariable&&)=delete;
+	ConditionalVariable(const ConditionalVariable&) = delete;
+	ConditionalVariable(ConditionalVariable&&) = delete;
 	
-	ConditionalVariable &operator=(const ConditionalVariable &)=delete;
-	ConditionalVariable &operator=(ConditionalVariable &&)=delete;
+	ConditionalVariable &operator=(const ConditionalVariable &) = delete;
+	ConditionalVariable &operator=(ConditionalVariable &&) = delete;
 
 	/**
 	 * Destroys the instance
@@ -133,7 +133,7 @@ public:
 	/**
 	 * Notifes the condition, releasing a thread that is waiting on the condition
 	 */
-	void Notify()const noexcept
+	void Notify() const noexcept
 	{
 		::WakeConditionVariable(&m_Condition);
 	}
@@ -141,7 +141,7 @@ public:
 	/**
 	 * Notifes the condition, releasing all threads that are waiting on the condition
 	 */
-	void NotifyAll()const noexcept
+	void NotifyAll() const noexcept
 	{
 		::WakeAllConditionVariable(&m_Condition);
 	}

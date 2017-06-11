@@ -63,9 +63,6 @@
     <ClInclude Include="Echo\Include\Echo\ImmediateWorkItemDispatcher.h">
       <Filter>include\Echo</Filter>
     </ClInclude>
-    <ClInclude Include="Echo\Include\Echo\IOException.h">
-      <Filter>include\Echo</Filter>
-    </ClInclude>
     <ClInclude Include="Echo\Include\Echo\IReaderWriter.h">
       <Filter>include\Echo</Filter>
     </ClInclude>
@@ -94,9 +91,6 @@
       <Filter>include\Echo</Filter>
     </ClInclude>
     <ClInclude Include="Echo\Include\Echo\Thread.h">
-      <Filter>include\Echo</Filter>
-    </ClInclude>
-    <ClInclude Include="Echo\Include\Echo\ThreadException.h">
       <Filter>include\Echo</Filter>
     </ClInclude>
     <ClInclude Include="Echo\Include\Echo\ThreadPool.h">

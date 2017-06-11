@@ -22,7 +22,7 @@ public:
 	/**
 	 * Accepts a function and executes it
 	 */
-	virtual void Submit(const std::function<void()> &function)=0;
+	virtual void Submit(const std::function<void()> &function) = 0;
 };
 
 } // end of namespace

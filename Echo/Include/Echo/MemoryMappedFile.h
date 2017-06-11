@@ -53,8 +53,8 @@ public:
 		Swap(rhs);
 	}
 
-	MemoryMappedFile(const MemoryMappedFile&)=delete;
-	MemoryMappedFile &operator=(const MemoryMappedFile&)=delete;
+	MemoryMappedFile(const MemoryMappedFile&) = delete;
+	MemoryMappedFile &operator=(const MemoryMappedFile&) = delete;
 
 	/**
 	 * Assign the instance from another instance
@@ -171,7 +171,7 @@ public:
 		DWORD high = static_cast<DWORD>(mappingSize >> 32);
 
 		const TCHAR *mappingName = nullptr;
-		if(optionalMappingName.length()!=0) mappingName = optionalMappingName.c_str();
+		if(optionalMappingName.length() != 0) mappingName = optionalMappingName.c_str();
 
 		auto mappingHandle = ::CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, protection, high, low, mappingName);
 		if(mappingHandle == Traits::InvalidValue()) throw IOException(_T("could not create in-memory mapped file"));

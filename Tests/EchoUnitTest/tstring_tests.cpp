@@ -4,7 +4,7 @@
 #include <chrono>
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include <Echo/tstring.h>
+#include <Echo\tstring.h>
 
 namespace EchoUnitTest {
 

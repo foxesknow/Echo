@@ -21,16 +21,16 @@ public:
 	{
 	}
 
-	ReadWriteLock(const ReadWriteLock&)=delete;
-	ReadWriteLock(ReadWriteLock&&)=delete;
+	ReadWriteLock(const ReadWriteLock&) = delete;
+	ReadWriteLock(ReadWriteLock&&) = delete;
 
-	ReadWriteLock &operator=(const ReadWriteLock&)=delete;
+	ReadWriteLock &operator=(const ReadWriteLock&) = delete;
 	ReadWriteLock &operator=(ReadWriteLock&&) = delete;
 
 	/**
 	* Enters the lock in exclusive mode
 	*/
-	void Enter()noexcept
+	void Enter() noexcept
 	{
 		::AcquireSRWLockExclusive(&m_Lock);
 	}
@@ -38,7 +38,7 @@ public:
 	/**
 	* Enters the lock in shared mode
 	*/
-	void EnterShared()noexcept
+	void EnterShared() noexcept
 	{
 		::AcquireSRWLockShared(&m_Lock);
 	}
@@ -47,7 +47,7 @@ public:
 	* Attempts to enter the lock in exclusive mode
 	* @returns true if the lock section was entered, otherwise false
 	*/
-	bool TryEnter()noexcept
+	bool TryEnter() noexcept
 	{
 		return ::TryAcquireSRWLockExclusive(&m_Lock)!=FALSE;
 	}
@@ -55,7 +55,7 @@ public:
 	/**
 	* Exits a lock that was acquired in exclusive mode
 	*/
-	void Exit()noexcept
+	void Exit() noexcept
 	{
 		::ReleaseSRWLockExclusive(&m_Lock);
 	}
@@ -63,7 +63,7 @@ public:
 	/**
 	* Exits a lock that was acquired in shared mode
 	*/
-	void ExitShared()noexcept
+	void ExitShared() noexcept
 	{
 		::ReleaseSRWLockShared(&m_Lock);
 	}
@@ -71,7 +71,7 @@ public:
 	/**
 	 * Returns the underlying lock
 	 */
-	SRWLOCK *Underlying()noexcept
+	SRWLOCK *Underlying() noexcept
 	{
 		return &m_Lock;
 	}
@@ -95,11 +95,11 @@ public:
 		m_Lock.Enter();
 	}
 
-	Guard(const Guard &)=delete;
-	Guard(Guard &&)=delete;
+	Guard(const Guard &) = delete;
+	Guard(Guard &&) = delete;
 	
-	Guard &operator=(Guard &&)=delete;
-	Guard &operator=(const Guard &)=delete;
+	Guard &operator=(Guard &&) = delete;
+	Guard &operator=(const Guard &) = delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
@@ -128,10 +128,10 @@ public:
 		m_Lock.EnterShared();
 	}
 
-	ReadWriteLockSharedGuard(const ReadWriteLockSharedGuard &)=delete;
-	ReadWriteLockSharedGuard(ReadWriteLockSharedGuard &&)=delete;
-	ReadWriteLockSharedGuard &operator=(const ReadWriteLockSharedGuard &)=delete;
-	ReadWriteLockSharedGuard &operator=(ReadWriteLockSharedGuard &&)=delete;
+	ReadWriteLockSharedGuard(const ReadWriteLockSharedGuard &) = delete;
+	ReadWriteLockSharedGuard(ReadWriteLockSharedGuard &&) = delete;
+	ReadWriteLockSharedGuard &operator=(const ReadWriteLockSharedGuard &) = delete;
+	ReadWriteLockSharedGuard &operator=(ReadWriteLockSharedGuard &&) = delete;
 
 	/**
 	 * Destroys the lock be exitting the critical section
@@ -162,9 +162,9 @@ public:
 		std::swap(m_Lock, rhs.m_Lock);
 	}
 
-	UniqueGuard(const UniqueGuard &)=delete;
+	UniqueGuard(const UniqueGuard &) = delete;
 	
-	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	UniqueGuard &operator=(UniqueGuard &&rhs) noexcept
 	{
 		if(this != &rhs)
 		{

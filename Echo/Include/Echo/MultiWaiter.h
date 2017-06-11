@@ -48,8 +48,8 @@ public:
 		return *this;
 	}
 
-	MultiWaiter(const MultiWaiter&)=delete;
-	MultiWaiter &operator=(const MultiWaiter&)=delete;
+	MultiWaiter(const MultiWaiter&) = delete;
+	MultiWaiter &operator=(const MultiWaiter&) = delete;
 
 	/**
 	 * Add a handle to the waiter

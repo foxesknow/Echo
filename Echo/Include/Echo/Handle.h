@@ -19,9 +19,9 @@ protected:
 	{
 	}
 
-	Handle(Handle &&rhs)=delete;
-	Handle(const Handle &)=delete;
-	Handle &operator=(const Handle &)=delete;
+	Handle(Handle &&rhs) = delete;
+	Handle(const Handle &) = delete;
+	Handle &operator=(const Handle &) = delete;
 
 	/**
 	 * Swaps two handles
@@ -29,7 +29,7 @@ protected:
 	 */
 	void Swap(Handle &rhs) noexcept
 	{
-		std::swap(m_Handle,rhs.m_Handle);
+		std::swap(m_Handle, rhs.m_Handle);
 	}
 
 	/**
@@ -64,5 +64,5 @@ public:
 	 * Detaches the handle from its object, leaving it in a destructable but unusable state
 	 * @returns the handle managed by the object
 	 */
-	virtual HANDLE Detach()=0;
+	virtual HANDLE Detach() = 0;
 };

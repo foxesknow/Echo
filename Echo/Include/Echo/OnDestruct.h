@@ -32,8 +32,8 @@ public:
 		rhs.m_ShouldExecute = false;
 	}
 
-	OnDestruct(const OnDestruct&)=delete;
-	OnDestruct &operator=(const OnDestruct&)=delete;
+	OnDestruct(const OnDestruct&) = delete;
+	OnDestruct &operator=(const OnDestruct&) = delete;
 
 	/**
 	 * Moves the right hand side into the instance

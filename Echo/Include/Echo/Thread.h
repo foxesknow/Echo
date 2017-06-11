@@ -4,8 +4,6 @@
 #include <Echo\HandleTraits.h>
 #include <Echo\Exceptions.h>
 
-#include <Echo\ThreadException.h>
-
 #include <functional>
 #include <process.h>
 
@@ -49,8 +47,8 @@ public:
 	{
 	}
 
-	Thread(const Thread&)=delete;
-	Thread &operator=(const Thread&)=delete;
+	Thread(const Thread&) = delete;
+	Thread &operator=(const Thread&) = delete;
 
 	/**
 	 * Moves the thread into the instance
@@ -83,7 +81,7 @@ public:
 	/**
 	 *Suspends the thread
 	 */
-	void Suspend()const
+	void Suspend() const
 	{
 		if(UnderlyingHandle() == Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
@@ -94,7 +92,7 @@ public:
 	/**
 	 * Resumes a previously suspended thread
 	 */
-	void Resume()const
+	void Resume() const
 	{
 		if(UnderlyingHandle() == Traits::InvalidValue()) throw ThreadException(_T("thread not started"));
 
@@ -106,7 +104,7 @@ public:
 	 * Indicates if the thread has been started
 	 * @returns true if the thread has been started, otherwise false
 	 */
-	bool Started()const
+	bool Started() const
 	{
 		return UnderlyingHandle() != Traits::InvalidValue();
 	}

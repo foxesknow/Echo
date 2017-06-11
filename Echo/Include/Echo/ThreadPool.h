@@ -3,7 +3,7 @@
 #include <Echo\WinInclude.h>
 
 #include <Echo\IFunctionDispatcher.h>
-#include <Echo\ThreadException.h>
+#include <Echo\Exceptions.h>
 
 #include <functional>
 #include <utility>
@@ -90,11 +90,11 @@ public:
 		if(m_Pool == nullptr) throw WindowsException(_T("Failed to create threadpool"));
 	}
 
-	ThreadPool(const ThreadPool&)=delete;
-	ThreadPool(ThreadPool&&)=delete;
+	ThreadPool(const ThreadPool&) = delete;
+	ThreadPool(ThreadPool&&) = delete;
 
-	ThreadPool &operator=(const ThreadPool&)=delete;
-	ThreadPool &operator=(ThreadPool&&)=delete;
+	ThreadPool &operator=(const ThreadPool&) = delete;
+	ThreadPool &operator=(ThreadPool&&) = delete;
 
 	/**
 	 * Destroys the instance.
@@ -129,7 +129,7 @@ public:
 	/**	
 	 * Returns the number of items waiting to be run on the pool
 	 */
-	LONG OutstandingWork()const noexcept
+	LONG OutstandingWork() const noexcept
 	{
 		LONG outstanding = ::InterlockedCompareExchange(&m_OutstandingWork, 0, 0);
 		return outstanding;
@@ -138,7 +138,7 @@ public:
 	/**
 	 * Indicates if we should cancel any outstanding items when the pool is destroyed
 	 */
-	bool CancelOutstanding()const noexcept
+	bool CancelOutstanding() const noexcept
 	{
 		return m_CancelOutstanding;
 	}
@@ -146,7 +146,7 @@ public:
 	/**
 	 * Indicates if we should cancel any outstanding items when the pool is destroyed
 	 */
-	void CancelOutstanding(bool value)noexcept
+	void CancelOutstanding(bool value) noexcept
 	{
 		m_CancelOutstanding = value;
 	}

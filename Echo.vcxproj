@@ -25,7 +25,6 @@
     <ClInclude Include="Echo\Include\Echo\HandleTraits.h" />
     <ClInclude Include="Echo\Include\Echo\IFunctionDispatcher.h" />
     <ClInclude Include="Echo\Include\Echo\ImmediateWorkItemDispatcher.h" />
-    <ClInclude Include="Echo\Include\Echo\IOException.h" />
     <ClInclude Include="Echo\Include\Echo\IReaderWriter.h" />
     <ClInclude Include="Echo\Include\Echo\MemoryMappedFile.h" />
     <ClInclude Include="Echo\Include\Echo\MethodCall.h" />
@@ -36,7 +35,6 @@
     <ClInclude Include="Echo\Include\Echo\ReadWriteLock.h" />
     <ClInclude Include="Echo\Include\Echo\Semaphore.h" />
     <ClInclude Include="Echo\Include\Echo\Thread.h" />
-    <ClInclude Include="Echo\Include\Echo\ThreadException.h" />
     <ClInclude Include="Echo\Include\Echo\ThreadPool.h" />
     <ClInclude Include="Echo\Include\Echo\tstring.h" />
     <ClInclude Include="Echo\Include\Echo\WaitHandle.h" />

@@ -21,7 +21,7 @@ public:
 	/**
 	 * Closes the file, if open
 	 */
-	virtual void Close() noexcept=0;
+	virtual void Close() noexcept = 0;
 
 	/**
 	 * Synchronously writes to the file
@@ -29,7 +29,7 @@ public:
 	 * @param bytesToWrite  how much data to write
 	 * @returns the number of bytes written to the file
 	 */
-	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) const=0;
+	virtual DWORD Write(const void *buffer, DWORD bytesToWrite) = 0;
 
 	/**
 	 * Asynchronously writes to the file
@@ -38,7 +38,7 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the write completed immediately, Pending if the write is pending completion
 	 */
-	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) const=0;
+	virtual AsyncResult WriteAsync(const void *buffer, DWORD bytesToWrite, OVERLAPPED &overlapped) = 0;
 
 	/**
 	 * Synchronously reads from the file
@@ -46,7 +46,7 @@ public:
 	 * @param bytesToRead  how much data to read
 	 * @returns the number of bytes read from the file
 	 */
-	virtual DWORD Read(void *buffer, DWORD bytesToRead) const=0;
+	virtual DWORD Read(void *buffer, DWORD bytesToRead) = 0;
 
 	/**
 	 * Asynchronously reads from the file
@@ -55,14 +55,14 @@ public:
 	 * @param overlapped  an overlapped structure describing the async operation
 	 * @returns Complete if the read completed immediately, Pending if the read is pending completion
 	 */
-	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) const=0;
+	virtual AsyncResult ReadAsync(void *buffer, DWORD bytesToRead, OVERLAPPED &overlapped) = 0;
 
 	/**
 	 * Waits for a pending operation to complete
 	 * @param overlapped  the overlapped structure that was passed to the async operation
 	 * @returns the number of bytes transferred by the async operation
 	 */
-	virtual DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) const=0;
+	virtual DWORD WaitForAsyncToComplete(OVERLAPPED &overlapped) = 0;
 };
 
 } // end of namespace

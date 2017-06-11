@@ -4,7 +4,7 @@
 
 #include <Echo\CriticalSection.h>
 #include <Echo\Events.h>
-#include <Echo\ThreadException.h>
+#include <Echo\Exceptions.h>
 #include <Echo\ThreadPool.h>
 
 #include <deque>
@@ -117,7 +117,7 @@ protected:
 	/**
 	 * Carries out the processing an an individual item of work
 	 */
-	virtual void ProcessItem(T &item)=0;
+	virtual void ProcessItem(T &item) = 0;
 
 	/**
 	 * Indicates if any remaining items should be processed when the work queue is shut down
@@ -131,7 +131,7 @@ protected:
 	/**
 	 * Indicates if any remaining items should be processed when the work queue is shut down
 	 */
-	bool ProcessRemainingItems()const
+	bool ProcessRemainingItems() const
 	{
 		return m_ProcessRemainingItems;
 	}
@@ -141,7 +141,7 @@ public:
 	 * Initializes the instance
 	 * @param dispatcher  an object that is able to dispatch function invocations
 	 */
-	WorkDispatchQueue(IFunctionDispatcher &dispatcher) : m_Dispatcher(dispatcher), m_StopEvent(InitialState::NonSignalled)
+	WorkDispatchQueue(IFunctionDispatcher &dispatcher) noexcept : m_Dispatcher(dispatcher), m_StopEvent(InitialState::NonSignalled)
 	{
 		m_ActiveData = &m_Data;
 	}
@@ -154,8 +154,11 @@ public:
 		Shutdown();
 	}
 
-	WorkDispatchQueue(const WorkDispatchQueue&)=delete;
-	WorkDispatchQueue &operator=(const WorkDispatchQueue&)=delete;
+	WorkDispatchQueue(const WorkDispatchQueue&) = delete;
+	WorkDispatchQueue(WorkDispatchQueue&&) = delete;
+	
+	WorkDispatchQueue &operator=(const WorkDispatchQueue&) = delete;
+	WorkDispatchQueue &operator=(WorkDispatchQueue&&) = delete;
 
 	/**
 	 * Adds a work item to the queue.

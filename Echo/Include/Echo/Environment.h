@@ -28,17 +28,17 @@ private:
 	}
 
 public:
-	Environment()=delete;
-	Environment(const Environment&)=delete;
-	Environment &operator=(const Environment&)=delete;
+	Environment() = delete;
+	Environment(const Environment&) = delete;
+	Environment &operator=(const Environment&) = delete;
 
 	/**
 	 * Returns the number of processors in the system
 	 */
-	static int ProcessorCount()
+	static DWORD ProcessorCount()
 	{
 		Initialize();
-		return static_cast<int>(s_SystemInfo.dwNumberOfProcessors);
+		return s_SystemInfo.dwNumberOfProcessors;
 	}
 
 	/**

@@ -3,7 +3,7 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include <Echo/CriticalSection.h>
+#include <Echo\CriticalSection.h>
 
 #include <utility>
 

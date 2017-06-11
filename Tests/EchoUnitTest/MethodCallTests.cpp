@@ -3,8 +3,8 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-#include <Echo/MethodCall.h>
-#include <Echo/Exceptions.h>
+#include <Echo\MethodCall.h>
+#include <Echo\Exceptions.h>
 
 namespace EchoUnitTest 
 {

@@ -36,8 +36,8 @@ public:
 		std::swap(m_Size, rhs.m_Size);
 	}
 
-	Buffer(const Buffer &&)=delete;	
-	Buffer &operator=(const Buffer &)=delete;
+	Buffer(const Buffer &&) = delete;	
+	Buffer &operator=(const Buffer &) = delete;
 
 	/**
 	 * Moves an existing buffer.

@@ -5,7 +5,7 @@
 #include <Echo\tstring.h>
 
 #include <Echo\Guard.h>
-#include <Echo\ThreadException.h>
+#include <Echo\Exceptions.h>
 
 #include <utility>
 
@@ -60,8 +60,8 @@ public:
 	{
 	}
 
-	Mutex(const Mutex&)=delete;
-	Mutex &operator=(const Mutex&)=delete;
+	Mutex(const Mutex&) = delete;
+	Mutex &operator=(const Mutex&) = delete;
 
 	/**
 	 * Assigns the mutex via a move
@@ -117,9 +117,9 @@ public:
 		m_Mutex.Wait();
 	}
 
-	Guard(const Guard &)=delete;
-	Guard &operator=(const Guard &)=delete;
-	Guard &operator=(Guard &&)=delete;
+	Guard(const Guard &) = delete;
+	Guard &operator=(const Guard &) = delete;
+	Guard &operator=(Guard &&) = delete;
 
 	/**
 	 * Destroys the instance by releasing the mutex
@@ -150,9 +150,9 @@ public:
 		std::swap(m_Mutex, rhs.m_Mutex);
 	}
 
-	UniqueGuard(const UniqueGuard &)=delete;
+	UniqueGuard(const UniqueGuard &) = delete;
 	
-	UniqueGuard &operator=(UniqueGuard &&rhs)noexcept
+	UniqueGuard &operator=(UniqueGuard &&rhs) noexcept
 	{
 		if(this != &rhs)
 		{
