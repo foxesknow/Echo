@@ -35,7 +35,7 @@ public:
 	/**
 	 * Returns the number of processors in the system
 	 */
-	static DWORD ProcessorCount()
+	static DWORD ProcessorCount() noexcept
 	{
 		Initialize();
 		return s_SystemInfo.dwNumberOfProcessors;
@@ -44,7 +44,7 @@ public:
 	/**
 	 * Returns the number of bytes in a page
 	 */
-	static DWORD PageSize()
+	static DWORD PageSize() noexcept
 	{
 		Initialize();
 		return s_SystemInfo.dwPageSize;
@@ -81,7 +81,7 @@ public:
 	/**
 	 * Returns the command line for the process
 	 */
-	static tstd::tstring CommandLine()
+	static tstd::tstring CommandLine() noexcept
 	{
 		tstd::tstring commandLine = ::GetCommandLine();
 		return commandLine;
