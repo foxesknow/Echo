@@ -89,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="ActionDispatchQueueTests.cpp" />
     <ClCompile Include="BufferTests.cpp" />
+    <ClCompile Include="ConditionalVariableTests.cpp" />
     <ClCompile Include="CriticalSectionTests.cpp" />
     <ClCompile Include="EventsTests.cpp" />
     <ClCompile Include="FileTests.cpp" />

@@ -64,25 +64,12 @@ public:
 
 	/**
 	 * Waits for the handle to be signalled
-	 * @param milliseconds  how long to wait
-	 * @returns true if the handle is signalled, false otherwise
-	 */
-	bool Wait(const std::chrono::milliseconds &milliseconds) const
-	{
-		return DoWait(milliseconds);
-	}
-
-	/**
-	 * Waits for the handle to be signalled
 	 * @param duration  how long to wait
 	 * @returns true if the handle is signalled, false otherwise
 	 */
-	template<typename REP, typename PERIOD>
-	bool Wait(const std::chrono::duration<REP,PERIOD> &duration) const
+	bool Wait(const std::chrono::milliseconds &duration) const
 	{
-		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto ms = static_cast<DWORD>(asMilliseconds.count());
-		return DoWait(ms);
+		return DoWait(duration);
 	}
 };
 

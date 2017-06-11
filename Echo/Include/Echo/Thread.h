@@ -50,6 +50,7 @@ public:
 	}
 
 	Thread(const Thread&)=delete;
+	Thread &operator=(const Thread&)=delete;
 
 	/**
 	 * Moves the thread into the instance

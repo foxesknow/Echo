@@ -76,11 +76,9 @@ public:
 	 * @param duration  how long to wait for
 	 * @returns true if all handles were signalled, otherwise false
 	 */
-	template<typename REP, typename PERIOD>
-	bool WaitAll(const std::chrono::duration<REP,PERIOD> &duration) const
+	bool WaitAll(const std::chrono::milliseconds &duration) const
 	{
-		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto ms=static_cast<DWORD>(asMilliseconds.count());
+		auto ms=static_cast<DWORD>(duration.count());
 
 		const HANDLE *handles = m_Handles.data();
 		auto size = m_Handles.size();
@@ -119,11 +117,9 @@ public:
 	 * @param duration  how long to wait for
 	 * @returns the 0 based index of the lowest signalled handle, of -1 if nothing was signalled
 	 */
-	template<typename REP, typename PERIOD>
-	int WaitAny(const std::chrono::duration<REP,PERIOD> &duration) const
+	int WaitAny(const std::chrono::milliseconds &duration) const
 	{
-		auto asMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-		auto ms = static_cast<DWORD>(asMilliseconds.count());
+		auto ms = static_cast<DWORD>(duration.count());
 
 		const HANDLE *handles = m_Handles.data();
 		auto size = m_Handles.size();

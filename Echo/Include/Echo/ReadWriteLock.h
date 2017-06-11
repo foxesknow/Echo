@@ -67,6 +67,14 @@ public:
 	{
 		::ReleaseSRWLockShared(&m_Lock);
 	}
+
+	/**
+	 * Returns the underlying lock
+	 */
+	SRWLOCK *Underlying()noexcept
+	{
+		return &m_Lock;
+	}
 };
 
 /**
